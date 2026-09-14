@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dealer Incentive Schemes Portal</title>
   <style>
+    /* =========================================================
+       STRICT RESET (Combats GitHub Pages Theme Injections)
+       ========================================================= */
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important; /* STOPS HORIZONTAL SCROLLING */
+    }
+    
+    *, *:before, *:after { 
+      box-sizing: border-box !important; 
+      /* Forces the long GitHub injected title to wrap instead of pushing screen wide */
+      word-break: break-word !important; 
+      overflow-wrap: break-word !important;
+    }
+
     :root {
       --primary: #1a365d;
       --primary-light: #2b6cb0;
@@ -18,7 +36,7 @@
       --text: #2d3748;
       --muted: #718096;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--bg);
@@ -28,69 +46,93 @@
       -webkit-font-smoothing: antialiased;
     }
     
-    /* Header Structure */
+    /* =========================================================
+       HEADER 
+       ========================================================= */
     .header {
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
-      padding: 1.25rem 1.5rem;
+      padding: 1rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       position: sticky;
       top: 0;
       z-index: 10;
+      width: 100%;
     }
     .header-content {
       max-width: 960px;
       margin: 0 auto;
       display: flex;
+      flex-direction: row !important; /* Force inline layout */
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
     }
-    .header h1 { font-size: 1.4rem; font-weight: 600; line-height: 1.2; }
-    .header p { opacity: 0.9; font-size: 0.9rem; margin-top: 0.35rem; }
-    .container { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .header-text {
+      flex: 1;
+    }
+    .header h1 { font-size: clamp(1.1rem, 4vw, 1.3rem); font-weight: 600; line-height: 1.2; margin: 0; }
+    .header p { opacity: 0.9; font-size: 0.8rem; margin: 0.25rem 0 0 0; }
     
-    /* Login */
+    .container { max-width: 960px; margin: 0 auto; padding: 1rem; width: 100%; }
+    
+    /* =========================================================
+       LOGIN SECTION (Flex-Centered)
+       ========================================================= */
+    #loginSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 75vh;
+      width: 100%;
+      padding: 1rem;
+    }
     .login-card {
       background: var(--card);
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      padding: 2.5rem 2rem;
-      max-width: 420px;
-      margin: 3rem auto;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+      padding: 2.5rem 1.5rem;
+      width: 100%;
+      max-width: 400px;
+      margin: 0; 
     }
     .login-card h2 {
       text-align: center;
+      margin-top: 0;
       margin-bottom: 1.5rem;
       color: var(--primary);
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
     .form-group { margin-bottom: 1.25rem; }
     .form-group label {
       display: block;
       font-weight: 600;
       font-size: 0.875rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       color: var(--text);
     }
     .form-group input {
       width: 100%;
-      padding: 0.85rem 1rem; /* Better touch targets */
+      padding: 0.85rem 1rem; 
       border: 1.5px solid var(--border);
       border-radius: 8px;
       font-size: 1rem;
       transition: border-color 0.2s;
-      appearance: none; /* Removes default iOS styling */
+      appearance: none; 
     }
     .form-group input:focus {
       outline: none;
       border-color: var(--primary-light);
       box-shadow: 0 0 0 3px rgba(43,108,176,0.15);
     }
+    
+    /* =========================================================
+       BUTTONS
+       ========================================================= */
     .btn {
       display: inline-block;
       width: 100%;
-      padding: 1rem; /* Improved touch target for mobile */
+      padding: 1rem; 
       background: var(--primary);
       color: white;
       border: none;
@@ -102,13 +144,17 @@
       text-align: center;
     }
     .btn:hover { background: var(--primary-light); }
+    
     .btn-logout {
-      width: auto;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.9rem;
+      width: auto !important; /* Prevents stretching */
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
       background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .btn-logout:hover { background: rgba(255,255,255,0.3); }
+    
     .error-msg {
       background: #fed7d7;
       color: var(--danger);
@@ -120,35 +166,32 @@
       text-align: center;
     }
     
-    /* Dashboard */
-    #dashboard { display: none; }
+    /* =========================================================
+       DASHBOARD & SCHEME CARDS
+       ========================================================= */
+    #dashboard { display: none; width: 100%; }
+    
     .dealer-info {
       background: var(--card);
       border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1.5rem;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
     }
-    .dealer-info h2 { font-size: 1.35rem; color: var(--primary); }
-    .dealer-info .code { color: var(--muted); font-size: 0.95rem; margin-top: 0.2rem;}
+    .dealer-info h2 { margin: 0; font-size: 1.3rem; color: var(--primary); }
+    .dealer-info .code { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
     
-    /* Scheme cards */
     .scheme {
       background: var(--card);
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       overflow: hidden;
     }
     .scheme-header {
       background: linear-gradient(135deg, var(--primary), #2c5282);
       color: white;
-      padding: 1rem 1.25rem;
+      padding: 1rem;
       font-size: 1.05rem;
       font-weight: 600;
       display: flex;
@@ -158,131 +201,81 @@
     }
     .scheme-header .badge {
       background: rgba(255,255,255,0.2);
-      padding: 0.35rem 0.85rem;
+      padding: 0.25rem 0.6rem;
       border-radius: 20px;
       font-size: 0.75rem;
       font-weight: 600;
       white-space: nowrap;
+      flex-shrink: 0;
     }
-    .scheme-body { padding: 1.25rem; }
+    .scheme-body { padding: 1rem; }
     
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin: 1.25rem 0 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .section-title:first-child { margin-top: 0; }
+    
+    /* Metrics Grid Setup */
     .metrics {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.75rem;
     }
     .metric {
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 1rem 0.85rem;
+      padding: 0.85rem 0.5rem;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .metric .label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.03em;
       color: var(--muted);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
       font-weight: 600;
     }
     .metric .value {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--primary);
-      word-break: break-word; /* Prevents overflow of large numbers */
     }
     .metric .value.positive { color: var(--success); }
     .metric .value.negative { color: var(--danger); }
     .metric .value.neutral { color: var(--warning); }
     
-    .section-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin: 1.25rem 0 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
     .status-yes { color: var(--success); font-weight: 700; }
     .status-no { color: var(--danger); font-weight: 700; }
     
     .note {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--muted);
       margin-top: 1rem;
-      padding-top: 1rem;
+      padding-top: 0.75rem;
       border-top: 1px dashed var(--border);
     }
     
-    /* =============== MOBILE RESPONSIVE TWEAKS =============== */
+    /* =========================================================
+       MOBILE GRID LOCK (Strictly enforces 2 columns)
+       ========================================================= */
     @media (max-width: 600px) {
-      .header {
-        padding: 1rem;
-      }
-      .header h1 {
-        font-size: 1.2rem;
-      }
-      .container {
-        padding: 1rem 0.5rem;
-      }
-      
-      /* Login tweaks */
-      .login-card {
-        margin: 1rem auto;
-        padding: 1.75rem 1.25rem;
-      }
-      
-      /* Dashboard header tweaks */
-      .dealer-info {
-        flex-direction: column; 
-        align-items: flex-start;
-        padding: 1rem;
-      }
-      .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .btn-logout {
-        width: 100%; /* Make logout full width on mobile for easy tapping */
-        text-align: center;
-      }
-      
-      /* Scheme Cards Tweaks */
-      .scheme-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .scheme-body {
-        padding: 1rem;
-      }
-      
-      /* Metrics layout for mobile */
-      .metrics { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 0.75rem;
-      }
-      .metric {
-        padding: 0.85rem 0.5rem;
-      }
-      .metric .value {
-        font-size: 1.15rem;
-      }
-    }
-
-    /* Very small screens (e.g. iPhone SE, older Androids) */
-    @media (max-width: 380px) {
-      .metrics {
-        grid-template-columns: 1fr; /* Stack into a single column */
-      }
+      .metrics { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="header">
     <div class="header-content">
-      <div>
+      <div class="header-text">
         <h1>Dealer Incentive Schemes</h1>
         <p>View your scheme-wise achievements &amp; earnings</p>
       </div>
@@ -290,7 +283,9 @@
     </div>
   </div>
 
+  <!-- Main Container -->
   <div class="container">
+    
     <!-- Login -->
     <div id="loginSection">
       <div class="login-card">
@@ -313,13 +308,12 @@
     <!-- Dashboard -->
     <div id="dashboard">
       <div class="dealer-info">
-        <div>
-          <h2 id="dealerName">—</h2>
-          <div class="code">Code: <span id="dealerCodeDisplay">—</span></div>
-        </div>
+        <h2 id="dealerName">—</h2>
+        <div class="code">Code: <span id="dealerCodeDisplay">—</span></div>
       </div>
       <div id="schemesContainer"></div>
     </div>
+    
   </div>
 
   <script>
@@ -573,7 +567,7 @@
       const dealer = DEALERS[code];
       if (!dealer || dealer.password !== pwd) {
         err.style.display = 'block';
-        err.textContent = 'Invalid Dealer Code or Password. Please try again.';
+        err.textContent = 'Invalid Dealer Code or Password.';
         return false;
       }
       err.style.display = 'none';
@@ -583,7 +577,7 @@
 
     function logout() {
       document.getElementById('dashboard').style.display = 'none';
-      document.getElementById('loginSection').style.display = 'block';
+      document.getElementById('loginSection').style.display = 'flex';
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('loginForm').reset();
       window.scrollTo(0,0);
@@ -789,7 +783,7 @@
         </div>
         <div class="scheme-body">
           <div class="metrics">
-            ${metric('Avg Retail (Arena+Nexa)', m.avg_retail)}
+            ${metric('Avg Retail', m.avg_retail)}
             ${metric('YTD CY', m.ytd_cy)}
             ${metric('YTD LY', m.ytd_ly)}
             ${metric('Growth %', m.growth, true)}
@@ -800,7 +794,7 @@
             ${metric('Jul Vahan', m.jul_vahan)}
             ${metric('Aug Vahan', m.aug_vahan)}
             ${metric('Sep Vahan', m.sep_vahan)}
-            ${metric('Jun Vahan (Base)', m.jun_vahan)}
+            ${metric('Jun Vahan', m.jun_vahan)}
             ${metric('LM Vahan Tgt', m.lm_vahan_tgt)}
             ${metric('Vahan Ach Jul', m.vahan_ach_jul)}
             ${metric('Gap', m.gap)}
