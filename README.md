@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dealer Incentive Schemes Portal</title>
   <style>
     :root {
@@ -25,15 +25,29 @@
       color: var(--text);
       min-height: 100vh;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
+    
+    /* Header Structure */
     .header {
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
       padding: 1.25rem 1.5rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    .header h1 { font-size: 1.4rem; font-weight: 600; }
-    .header p { opacity: 0.9; font-size: 0.9rem; margin-top: 0.25rem; }
+    .header-content {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 600; line-height: 1.2; }
+    .header p { opacity: 0.9; font-size: 0.9rem; margin-top: 0.35rem; }
     .container { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem; }
     
     /* Login */
@@ -41,7 +55,7 @@
       background: var(--card);
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      padding: 2rem;
+      padding: 2.5rem 2rem;
       max-width: 420px;
       margin: 3rem auto;
     }
@@ -49,23 +63,24 @@
       text-align: center;
       margin-bottom: 1.5rem;
       color: var(--primary);
-      font-size: 1.35rem;
+      font-size: 1.5rem;
     }
     .form-group { margin-bottom: 1.25rem; }
     .form-group label {
       display: block;
       font-weight: 600;
       font-size: 0.875rem;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       color: var(--text);
     }
     .form-group input {
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1rem; /* Better touch targets */
       border: 1.5px solid var(--border);
       border-radius: 8px;
       font-size: 1rem;
       transition: border-color 0.2s;
+      appearance: none; /* Removes default iOS styling */
     }
     .form-group input:focus {
       outline: none;
@@ -75,7 +90,7 @@
     .btn {
       display: inline-block;
       width: 100%;
-      padding: 0.85rem;
+      padding: 1rem; /* Improved touch target for mobile */
       background: var(--primary);
       color: white;
       border: none;
@@ -84,23 +99,25 @@
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s;
+      text-align: center;
     }
     .btn:hover { background: var(--primary-light); }
     .btn-logout {
       width: auto;
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
       background: rgba(255,255,255,0.2);
     }
     .btn-logout:hover { background: rgba(255,255,255,0.3); }
     .error-msg {
       background: #fed7d7;
       color: var(--danger);
-      padding: 0.75rem;
+      padding: 0.85rem;
       border-radius: 8px;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       font-size: 0.9rem;
       display: none;
+      text-align: center;
     }
     
     /* Dashboard */
@@ -117,8 +134,8 @@
       flex-wrap: wrap;
       gap: 0.75rem;
     }
-    .dealer-info h2 { font-size: 1.25rem; color: var(--primary); }
-    .dealer-info .code { color: var(--muted); font-size: 0.9rem; }
+    .dealer-info h2 { font-size: 1.35rem; color: var(--primary); }
+    .dealer-info .code { color: var(--muted); font-size: 0.95rem; margin-top: 0.2rem;}
     
     /* Scheme cards */
     .scheme {
@@ -137,13 +154,15 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 0.75rem;
     }
     .scheme-header .badge {
       background: rgba(255,255,255,0.2);
-      padding: 0.25rem 0.75rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 20px;
       font-size: 0.75rem;
-      font-weight: 500;
+      font-weight: 600;
+      white-space: nowrap;
     }
     .scheme-body { padding: 1.25rem; }
     
@@ -157,21 +176,22 @@
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 0.85rem;
+      padding: 1rem 0.85rem;
       text-align: center;
     }
     .metric .label {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.03em;
       color: var(--muted);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.4rem;
       font-weight: 600;
     }
     .metric .value {
       font-size: 1.25rem;
       font-weight: 700;
       color: var(--primary);
+      word-break: break-word; /* Prevents overflow of large numbers */
     }
     .metric .value.positive { color: var(--success); }
     .metric .value.negative { color: var(--danger); }
@@ -181,49 +201,87 @@
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--muted);
-      margin: 1rem 0 0.5rem;
+      margin: 1.25rem 0 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-    table.detail {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-      margin-top: 0.5rem;
-    }
-    table.detail th, table.detail td {
-      padding: 0.5rem 0.75rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    table.detail th {
-      background: #edf2f7;
-      font-weight: 600;
-      color: var(--text);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-    }
-    table.detail tr:last-child td { border-bottom: none; }
     .status-yes { color: var(--success); font-weight: 700; }
     .status-no { color: var(--danger); font-weight: 700; }
     
     .note {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--muted);
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
       border-top: 1px dashed var(--border);
     }
     
+    /* =============== MOBILE RESPONSIVE TWEAKS =============== */
     @media (max-width: 600px) {
-      .metrics { grid-template-columns: repeat(2, 1fr); }
-      .dealer-info { flex-direction: column; align-items: flex-start; }
+      .header {
+        padding: 1rem;
+      }
+      .header h1 {
+        font-size: 1.2rem;
+      }
+      .container {
+        padding: 1rem 0.5rem;
+      }
+      
+      /* Login tweaks */
+      .login-card {
+        margin: 1rem auto;
+        padding: 1.75rem 1.25rem;
+      }
+      
+      /* Dashboard header tweaks */
+      .dealer-info {
+        flex-direction: column; 
+        align-items: flex-start;
+        padding: 1rem;
+      }
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .btn-logout {
+        width: 100%; /* Make logout full width on mobile for easy tapping */
+        text-align: center;
+      }
+      
+      /* Scheme Cards Tweaks */
+      .scheme-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .scheme-body {
+        padding: 1rem;
+      }
+      
+      /* Metrics layout for mobile */
+      .metrics { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 0.75rem;
+      }
+      .metric {
+        padding: 0.85rem 0.5rem;
+      }
+      .metric .value {
+        font-size: 1.15rem;
+      }
+    }
+
+    /* Very small screens (e.g. iPhone SE, older Androids) */
+    @media (max-width: 380px) {
+      .metrics {
+        grid-template-columns: 1fr; /* Stack into a single column */
+      }
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <div style="max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+    <div class="header-content">
       <div>
         <h1>Dealer Incentive Schemes</h1>
         <p>View your scheme-wise achievements &amp; earnings</p>
@@ -528,6 +586,7 @@
       document.getElementById('loginSection').style.display = 'block';
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('loginForm').reset();
+      window.scrollTo(0,0);
     }
 
     function showDashboard(d) {
