@@ -81,12 +81,25 @@ table.mt th:first-child,table.mt td:first-child{text-align:left}
 ul.cond{list-style:none;background:#fffbeb;border:1px solid #fde68a;border-radius:var(--r2);padding:.25rem .9rem}
 ul.cond li{font-size:.82rem;color:#78350f;padding:.6rem 0;border-top:1px dashed #fcd34d}
 ul.cond li:first-child{border-top:0}
+
+/* ULTRA-COMPACT MOBILE LAYOUT */
 @media(max-width:600px){
-.header{padding:.7rem 1rem}.container{padding:1rem .5rem}
-.dealer-banner{padding:1.1rem}.dealer-banner h2{font-size:1.35rem}
-.grid{grid-template-columns:repeat(2,1fr);gap:.5rem}
-.m{padding:.6rem .7rem}.m .v{font-size:1.05rem}.earn b{font-size:1.2rem}
-.body{padding:.9rem}.login-card{padding:1.5rem;margin:2rem .5rem}}
+.header{padding:.5rem}.header h1{font-size:1rem}.header p{font-size:.7rem}
+.btn-logout{padding:.3rem .5rem;font-size:.7rem}
+.container{padding:.4rem}
+.dealer-banner{padding:.6rem;margin-bottom:.5rem}.dealer-banner h2{font-size:1.1rem}
+.totals{gap:.4rem;margin-top:.4rem}.tot{padding:.4rem}.tot b{font-size:1rem}
+.running{margin:0 .25rem .4rem}.running h2{font-size:.9rem}
+.schemes{gap:.3rem}
+details.scheme>summary{padding:.4rem;gap:.4rem}
+.num{width:1.4rem;height:1.4rem;font-size:.7rem}
+.stitle h3{font-size:.8rem}.chips{gap:.2rem;margin-top:.15rem}
+.chip{font-size:.6rem;padding:.1rem .3rem}
+.grid{grid-template-columns:repeat(2,1fr);gap:.3rem}
+.m{padding:.4rem}.m .l{font-size:.6rem}.m .v{font-size:.9rem}.earn b{font-size:1rem}
+.body{padding:.5rem}.earn-row{gap:.4rem}.earn{padding:.5rem}
+.login-card{padding:1rem;margin:1rem .5rem}.login-card h2{font-size:1.1rem}
+}
 </style>
 </head>
 <body>
