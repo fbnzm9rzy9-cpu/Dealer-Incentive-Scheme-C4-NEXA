@@ -19,14 +19,17 @@
       color-scheme: light;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+    html { max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
     body {
       font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: var(--bg); color: var(--text);
       min-height: 100vh; min-height: 100dvh; line-height: 1.5;
       -webkit-tap-highlight-color: transparent;
       -webkit-font-smoothing: antialiased;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
+      width: 100%; max-width: 100%; overflow-x: hidden;
+      touch-action: pan-y pinch-zoom;   /* vertical scrolling only */
+      overscroll-behavior-x: none;
     }
 
     /* Header (respects notch / safe areas on iPhone & Android cutouts) */
@@ -46,6 +49,7 @@
     .header h1 { font-size: clamp(1.1rem, 4vw, 1.5rem); font-weight: 600; line-height: 1.25; }
     .header p { opacity: 0.9; font-size: clamp(0.8rem, 2.8vw, 0.95rem); margin-top: 0.2rem; }
 
+    .container, .dealer-info, .scheme, .conditions, .scheme-body, .conditions li { min-width: 0; max-width: 100%; }
     .container {
       max-width: 1200px; margin: 0 auto;
       padding: 1.25rem var(--gutter);
@@ -109,8 +113,8 @@
     .dealer-info .code { color: var(--muted); font-size: 0.9rem; }
 
     /* Schemes: 1 column on phones/tablets, 2 columns on laptops/desktops */
-    #schemesContainer { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
-    @media (min-width: 1100px) { #schemesContainer { grid-template-columns: 1fr 1fr; } }
+    #schemesContainer { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+    @media (min-width: 1100px) { #schemesContainer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 
     .scheme {
       background: var(--card); border-radius: 12px;
@@ -166,13 +170,32 @@
     .conditions li::before { content: '\25B8'; position: absolute; left: 0; color: var(--accent); }
     .conditions li b { color: #7b341e; }
 
-    /* Phones */
+    /* Phones: compact so every scheme fits the screen width; only vertical scrolling is needed */
     @media (max-width: 480px) {
-      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
-      .scheme-body, .conditions { padding: 0.9rem; }
+      html { font-size: 15px; }
+      :root { --gutter: 0.6rem; }
+      .container { padding-top: 0.75rem; }
+      .header { padding-top: calc(0.6rem + env(safe-area-inset-top, 0px)); padding-bottom: 0.6rem; }
+      .header h1 { font-size: 1.05rem; }
       .header p { display: none; }
+      .btn-logout { min-height: 40px; padding: 0.35rem 0.8rem; font-size: 0.8rem; }
+      .dealer-info { padding: 0.7rem 0.9rem; margin-bottom: 0.75rem; }
+      .dealer-info h2 { font-size: 1.05rem; }
+      .dealer-info .code { font-size: 0.8rem; }
+      #schemesContainer { gap: 0.75rem; }
+      .scheme-header { padding: 0.6rem 0.8rem; font-size: 0.95rem; }
+      .conditions { padding: 0.6rem 0.8rem; }
+      .conditions .cond-title { font-size: 0.68rem; margin-bottom: 0.3rem; }
+      .conditions li { font-size: 0.76rem; line-height: 1.4; padding: 0.3rem 0 0.3rem 0.9rem; }
+      .scheme-body { padding: 0.7rem 0.8rem; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; margin-bottom: 0.4rem; }
+      .metric { padding: 0.5rem 0.3rem; }
+      .metric .label { font-size: 0.6rem; margin-bottom: 0.2rem; }
+      .metric .value { font-size: 1rem; }
+      .metric .value.text { font-size: 0.9rem; }
+      .section-title { font-size: 0.68rem; margin: 0.7rem 0 0.4rem; }
     }
-    @media (max-width: 340px) { .metrics { grid-template-columns: 1fr; } }
+    @media (max-width: 340px) { html { font-size: 14px; } }
 
     /* Landscape phones: keep header compact */
     @media (max-height: 480px) and (orientation: landscape) {
