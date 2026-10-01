@@ -2,574 +2,640 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dealer Incentive Schemes Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* =========================================================
-       STRICT RESET (Combats GitHub Pages Theme Injections)
-       ========================================================= */
-    html, body {
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 100% !important;
-      max-width: 100vw !important;
-      overflow-x: hidden !important; /* STOPS HORIZONTAL SCROLLING */
-    }
-    
-    *, *:before, *:after { 
-      box-sizing: border-box !important; 
-      /* Forces the long GitHub injected title to wrap instead of pushing screen wide */
-      word-break: break-word !important; 
-      overflow-wrap: break-word !important;
-    }
-
     :root {
-      --primary: #1a365d;
-      --primary-light: #2b6cb0;
-      --accent: #ed8936;
-      --success: #38a169;
-      --danger: #e53e3e;
-      --warning: #d69e2e;
-      --bg: #f7fafc;
+      --primary: #0f172a;
+      --primary-light: #1e293b;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --bg: #f8fafc;
       --card: #ffffff;
       --border: #e2e8f0;
-      --text: #2d3748;
-      --muted: #718096;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: var(--text-main);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
-    
-    /* =========================================================
-       HEADER 
-       ========================================================= */
+
+    /* Top Navigation */
     .header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      background: var(--primary);
       color: white;
-      padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      padding: 1rem 2rem;
       position: sticky;
       top: 0;
-      z-index: 10;
-      width: 100%;
+      z-index: 100;
+      box-shadow: var(--shadow-md);
     }
+    
     .header-content {
-      max-width: 960px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      flex-direction: row !important; /* Force inline layout */
       justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-branding h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+
+    .header-branding p {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    /* Buttons & Forms */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid #334155;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-logout:hover {
+      background: #1e293b;
+      border-color: #475569;
+    }
+
+    /* Login Section */
+    .login-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 2.5rem;
+      max-width: 400px;
+      margin: 4rem auto;
+      border: 1px solid var(--border);
+    }
+
+    .login-card h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-main);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .form-group { margin-bottom: 1.5rem; }
+    
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s;
+      background: #f8fafc;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .btn-block { width: 100%; margin-top: 0.5rem; }
+
+    .error-msg {
+      background: var(--danger-bg);
+      color: var(--danger);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: none;
+      border: 1px solid #fecaca;
+    }
+
+    /* Dashboard Layout */
+    #dashboard { display: none; }
+    
+    .dealer-banner {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .dealer-banner h2 { font-size: 1.75rem; font-weight: 700; }
+    .dealer-banner .code { 
+      color: #94a3b8; 
+      font-size: 1rem; 
+      margin-top: 0.25rem;
+      display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-    .header-text {
-      flex: 1;
-    }
-    .header h1 { font-size: clamp(1.1rem, 4vw, 1.3rem); font-weight: 600; line-height: 1.2; margin: 0; }
-    .header p { opacity: 0.9; font-size: 0.8rem; margin: 0.25rem 0 0 0; }
     
-    .container { max-width: 960px; margin: 0 auto; padding: 1rem; width: 100%; }
-    
-    /* =========================================================
-       LOGIN SECTION (Flex-Centered)
-       ========================================================= */
-    #loginSection {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 75vh;
-      width: 100%;
-      padding: 1rem;
-    }
-    .login-card {
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.08);
-      padding: 2.5rem 1.5rem;
-      width: 100%;
-      max-width: 400px;
-      margin: 0; 
-    }
-    .login-card h2 {
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 1.5rem;
-      color: var(--primary);
-      font-size: 1.4rem;
-    }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-group label {
-      display: block;
+    .dealer-banner .badge {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
       font-weight: 600;
-      font-size: 0.875rem;
-      margin-bottom: 0.4rem;
-      color: var(--text);
+      letter-spacing: 0.05em;
     }
-    .form-group input {
-      width: 100%;
-      padding: 0.85rem 1rem; 
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-      appearance: none; 
+
+    /* Scheme Cards */
+    .schemes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
     }
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(43,108,176,0.15);
-    }
-    
-    /* =========================================================
-       BUTTONS
-       ========================================================= */
-    .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 1rem; 
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      text-align: center;
-    }
-    .btn:hover { background: var(--primary-light); }
-    
-    .btn-logout {
-      width: auto !important; /* Prevents stretching */
-      padding: 0.6rem 1rem;
-      font-size: 0.85rem;
-      background: rgba(255,255,255,0.2);
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-    .btn-logout:hover { background: rgba(255,255,255,0.3); }
-    
-    .error-msg {
-      background: #fed7d7;
-      color: var(--danger);
-      padding: 0.85rem;
-      border-radius: 8px;
-      margin-bottom: 1.2rem;
-      font-size: 0.9rem;
-      display: none;
-      text-align: center;
-    }
-    
-    /* =========================================================
-       DASHBOARD & SCHEME CARDS
-       ========================================================= */
-    #dashboard { display: none; width: 100%; }
-    
-    .dealer-info {
+
+    .scheme-card {
       background: var(--card);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .dealer-info h2 { margin: 0; font-size: 1.3rem; color: var(--primary); }
-    .dealer-info .code { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
-    
-    .scheme {
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-      margin-bottom: 1.25rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
       overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
+    .scheme-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
     .scheme-header {
-      background: linear-gradient(135deg, var(--primary), #2c5282);
-      color: white;
-      padding: 1rem;
-      font-size: 1.05rem;
-      font-weight: 600;
+      background: #f1f5f9;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .scheme-header h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
       gap: 0.75rem;
     }
-    .scheme-header .badge {
-      background: rgba(255,255,255,0.2);
-      padding: 0.25rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      white-space: nowrap;
-      flex-shrink: 0;
+
+    .scheme-header h3::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 1.25rem;
+      background: var(--accent);
+      border-radius: 4px;
     }
-    .scheme-body { padding: 1rem; }
+
+    .scheme-body { padding: 1.5rem; }
+
+    /* Collapsible Conditions */
+    details.conditions {
+      background: #fffbeb;
+      border-bottom: 1px solid #fde68a;
+      padding: 1rem 1.5rem;
+    }
     
+    details.conditions summary {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #b45309;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    details.conditions summary::before {
+      content: 'ℹ️';
+      font-size: 1rem;
+    }
+
+    details.conditions ul {
+      margin-top: 1rem;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    details.conditions li {
+      font-size: 0.875rem;
+      color: #78350f;
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      position: relative;
+      border-top: 1px dashed #fcd34d;
+    }
+
+    details.conditions li:first-child { border-top: none; }
+    
+    details.conditions li::before {
+      content: '•';
+      position: absolute;
+      left: 0.5rem;
+      color: #d97706;
+      font-weight: bold;
+    }
+
+    /* Metrics Grid */
     .section-title {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
-      color: var(--muted);
-      margin: 1.25rem 0 0.5rem;
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      margin: 1.5rem 0 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
     }
-    .section-title:first-child { margin-top: 0; }
     
-    /* Metrics Grid Setup */
-    .metrics {
+    .section-title:first-child { margin-top: 0; }
+
+    .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
     }
-    .metric {
+
+    .metric-box {
       background: #f8fafc;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.85rem 0.5rem;
-      text-align: center;
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      transition: background 0.2s;
     }
-    .metric .label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--muted);
-      margin-bottom: 0.3rem;
+
+    .metric-box:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
       font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
     }
-    .metric .value {
-      font-size: 1.15rem;
+
+    .metric-value {
+      font-size: 1.5rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--text-main);
+      letter-spacing: -0.025em;
     }
-    .metric .value.positive { color: var(--success); }
-    .metric .value.negative { color: var(--danger); }
-    .metric .value.neutral { color: var(--warning); }
-    
-    .status-yes { color: var(--success); font-weight: 700; }
-    .status-no { color: var(--danger); font-weight: 700; }
-    
-    .note {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 1rem;
-      padding-top: 0.75rem;
-      border-top: 1px dashed var(--border);
+
+    /* Status Colors */
+    .metric-value.positive { color: var(--success); }
+    .metric-value.negative { color: var(--danger); }
+    .metric-value.neutral { color: var(--warning); }
+    .metric-value.cur { color: var(--accent); }
+    .metric-value.text { font-size: 1.25rem; }
+
+    @media (max-width: 768px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .dealer-banner { flex-direction: column; align-items: flex-start; gap: 1rem; }
     }
     
-    /* =========================================================
-       MOBILE GRID LOCK (Strictly enforces 2 columns)
-       ========================================================= */
-    @media (max-width: 600px) {
-      .metrics { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .login-card { padding: 1.5rem; margin: 2rem 1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="header-content">
-      <div class="header-text">
-        <h1>Dealer Incentive Schemes</h1>
-        <p>View your scheme-wise achievements &amp; earnings</p>
-      </div>
-      <button id="logoutBtn" class="btn btn-logout" style="display:none;" onclick="logout()">Logout</button>
-    </div>
-  </div>
 
-  <!-- Main Container -->
-  <div class="container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-branding">
+        <h1>Dealer Incentive Schemes</h1>
+        <p>Performance & Earnings Dashboard</p>
+      </div>
+      <button id="logoutBtn" class="btn btn-logout" style="display:none;" onclick="logout()">
+        Sign Out
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
     
-    <!-- Login -->
+    <!-- Login Section -->
     <div id="loginSection">
       <div class="login-card">
-        <h2>Dealer Login</h2>
+        <h2>Dealer Portal Access</h2>
         <div id="errorMsg" class="error-msg"></div>
         <form id="loginForm" onsubmit="return handleLogin(event)">
           <div class="form-group">
             <label for="dealerCode">Dealer Code</label>
-            <input type="text" id="dealerCode" placeholder="e.g. G1NA" required autocomplete="username">
+            <input type="text" id="dealerCode" placeholder="Enter your Dealer Code" required autocomplete="username">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter password" required autocomplete="current-password">
+            <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
           </div>
-          <button type="submit" class="btn">View Schemes</button>
+          <button type="submit" class="btn btn-block">Access Dashboard</button>
         </form>
       </div>
     </div>
 
-    <!-- Dashboard -->
+    <!-- Dashboard Section -->
     <div id="dashboard">
-      <div class="dealer-info">
-        <h2 id="dealerName">—</h2>
-        <div class="code">Code: <span id="dealerCodeDisplay">—</span></div>
+      <div class="dealer-banner">
+        <div>
+          <h2 id="dealerName">—</h2>
+          <div class="code">
+            <span class="badge">DEALER CODE</span>
+            <span id="dealerCodeDisplay">—</span>
+          </div>
+        </div>
       </div>
-      <div id="schemesContainer"></div>
+      
+      <!-- Schemes Container -->
+      <div id="schemesContainer" class="schemes-grid"></div>
     </div>
-    
-  </div>
+
+  </main>
 
   <script>
     // ========== DEALER DATA ==========
     const DEALERS = {
-  "G1NA": {
-    "code": "G1NA",
-    "password": "G1NAAdinath",
-    "name": "Adinath",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 17, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 2, "retail_pct": 0},
-    "elevate": {"base": 76, "bi_jul": 42, "bi_aug": 27, "bi_sep": 1, "bi_ach": 70, "gap_bi_0": 6, "gap_bi_02": 8, "gap_bi_04": 10, "gap_bi_06": 11, "gr_bi": -0.0789, "dms_jul": 38, "dms_aug": 31, "dms_sep": 0, "dms_ach": 69, "gap_dms_0": 7, "gap_dms_02": 9, "gap_dms_04": 11, "gap_dms_06": 12, "gr_dms": -0.0921, "retail_base_bi": 225, "jul_bi": 110, "aug_bi": 96, "sep_bi": 2, "total_bi": 208, "growth_bi": -0.0756, "jul_dms": 100, "aug_dms": 89, "sep_dms": 0, "total_dms": 189, "growth_dms": -0.16, "incremental": 0.0679, "earning": 0},
-    "nac": {"ret_base": 235, "jul_ach": 100, "aug_ach": 90, "sep_ach": 0, "total_ach": 190, "gap_02": 92, "gap_022": 97, "gap_025": 104, "gap_028": 111, "gv_base_q1": 21, "gv_base_aug": 5, "jul_ret": 13, "aug_ret": 7, "sep_ret": 0, "q2_ach": 20, "gr": -0.0476, "earning": 441000},
-    "michelin": {"avg_retail": 4079, "category": "Michelin Gold", "ytd_cy": 184, "ytd_ly": 132, "growth": 0.3939, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 81, "aug_vahan": 44, "sep_vahan": 84, "jun_vahan": 59, "lm_vahan_tgt": 105, "vahan_ach_jul": 112, "gap": -7}
-  },
-  "D7NA": {
-    "code": "D7NA",
-    "password": "D7NACity",
-    "name": "City",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 24, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 1, "gap": -1, "earning_top": 1500, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 9, "retail_pct": 0},
-    "elevate": {"base": 143, "bi_jul": 53, "bi_aug": 39, "bi_sep": 5, "bi_ach": 97, "gap_bi_0": 46, "gap_bi_02": 49, "gap_bi_04": 52, "gap_bi_06": 55, "gr_bi": -0.3217, "dms_jul": 31, "dms_aug": 29, "dms_sep": 0, "dms_ach": 60, "gap_dms_0": 83, "gap_dms_02": 86, "gap_dms_04": 89, "gap_dms_06": 92, "gr_dms": -0.5804, "retail_base_bi": 300, "jul_bi": 127, "aug_bi": 98, "sep_bi": 9, "total_bi": 234, "growth_bi": -0.22, "jul_dms": 89, "aug_dms": 84, "sep_dms": 0, "total_dms": 173, "growth_dms": -0.4233, "incremental": -0.1571, "earning": 0},
-    "nac": {"ret_base": 309, "jul_ach": 89, "aug_ach": 84, "sep_ach": 0, "total_ach": 173, "gap_02": 198, "gap_022": 204, "gap_025": 214, "gap_028": 223, "gv_base_q1": 28, "gv_base_aug": 9, "jul_ret": 19, "aug_ret": 6, "sep_ret": 1, "q2_ach": 26, "gr": -0.0714, "earning": 495000},
-    "michelin": {"avg_retail": 4551, "category": "Michelin Gold", "ytd_cy": 174, "ytd_ly": 186, "growth": -0.0645, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 88, "aug_vahan": 81, "sep_vahan": 106, "jun_vahan": 84, "lm_vahan_tgt": null, "vahan_ach_jul": 89, "gap": null}
-  },
-  "KMNA": {
-    "code": "KMNA",
-    "password": "KMNAInfinity",
-    "name": "Infinity",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 7, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 2, "retail_pct": 0},
-    "elevate": {"base": 32, "bi_jul": 15, "bi_aug": 6, "bi_sep": 1, "bi_ach": 22, "gap_bi_0": 10, "gap_bi_02": 11, "gap_bi_04": 12, "gap_bi_06": 12, "gr_bi": -0.3125, "dms_jul": 9, "dms_aug": 5, "dms_sep": 0, "dms_ach": 14, "gap_dms_0": 18, "gap_dms_02": 19, "gap_dms_04": 20, "gap_dms_06": 20, "gr_dms": -0.5625, "retail_base_bi": 74, "jul_bi": 30, "aug_bi": 20, "sep_bi": 2, "total_bi": 52, "growth_bi": -0.2973, "jul_dms": 25, "aug_dms": 20, "sep_dms": 0, "total_dms": 45, "growth_dms": -0.3919, "incremental": -0.1706, "earning": 0},
-    "nac": {"ret_base": 75, "jul_ach": 25, "aug_ach": 20, "sep_ach": 0, "total_ach": 45, "gap_02": 45, "gap_022": 47, "gap_025": 49, "gap_028": 51, "gv_base_q1": 7, "gv_base_aug": 1, "jul_ret": 1, "aug_ret": 1, "sep_ret": 0, "q2_ach": 2, "gr": -0.7143, "earning": 108000},
-    "michelin": {"avg_retail": 1162, "category": "Michelin Gold", "ytd_cy": 27, "ytd_ly": 41, "growth": -0.3415, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 9, "aug_vahan": 27, "sep_vahan": 31, "jun_vahan": 19, "lm_vahan_tgt": 24, "vahan_ach_jul": 22, "gap": 2}
-  },
-  "03NB": {
-    "code": "03NB",
-    "password": "03NBJeewan",
-    "name": "Jeewan",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 14, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 1, "payout_base": 20000, "payout_top": 30000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 1, "gap": -1, "earning_top": 1500, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 6, "retail_pct": 0},
-    "elevate": {"base": 142, "bi_jul": 19, "bi_aug": 23, "bi_sep": 2, "bi_ach": 44, "gap_bi_0": 98, "gap_bi_02": 101, "gap_bi_04": 104, "gap_bi_06": 107, "gr_bi": -0.6901, "dms_jul": 25, "dms_aug": 13, "dms_sep": 0, "dms_ach": 38, "gap_dms_0": 104, "gap_dms_02": 107, "gap_dms_04": 110, "gap_dms_06": 113, "gr_dms": -0.7324, "retail_base_bi": 323, "jul_bi": 80, "aug_bi": 55, "sep_bi": 4, "total_bi": 139, "growth_bi": -0.5697, "jul_dms": 77, "aug_dms": 44, "sep_dms": 0, "total_dms": 121, "growth_dms": -0.6254, "incremental": -0.107, "earning": 0},
-    "nac": {"ret_base": 339, "jul_ach": 81, "aug_ach": 45, "sep_ach": 0, "total_ach": 126, "gap_02": 281, "gap_022": 288, "gap_025": 298, "gap_028": 308, "gv_base_q1": 49, "gv_base_aug": 11, "jul_ret": 10, "aug_ret": 6, "sep_ret": 1, "q2_ach": 17, "gr": -0.6531, "earning": 270000},
-    "michelin": {"avg_retail": 4115, "category": "Michelin Gold", "ytd_cy": 120, "ytd_ly": 197, "growth": -0.3909, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 79, "aug_vahan": 103, "sep_vahan": 132, "jun_vahan": 77, "lm_vahan_tgt": 76, "vahan_ach_jul": 76, "gap": 0}
-  },
-  "U5NA": {
-    "code": "U5NA",
-    "password": "U5NAKamthi",
-    "name": "Kamthi",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 19, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 4, "retail_pct": 0},
-    "elevate": {"base": 68, "bi_jul": 16, "bi_aug": 16, "bi_sep": 1, "bi_ach": 33, "gap_bi_0": 35, "gap_bi_02": 37, "gap_bi_04": 38, "gap_bi_06": 40, "gr_bi": -0.5147, "dms_jul": 19, "dms_aug": 16, "dms_sep": 0, "dms_ach": 35, "gap_dms_0": 33, "gap_dms_02": 35, "gap_dms_04": 36, "gap_dms_06": 38, "gr_dms": -0.4853, "retail_base_bi": 240, "jul_bi": 80, "aug_bi": 70, "sep_bi": 4, "total_bi": 154, "growth_bi": -0.3583, "jul_dms": 77, "aug_dms": 63, "sep_dms": 0, "total_dms": 140, "growth_dms": -0.4167, "incremental": -0.0686, "earning": 0},
-    "nac": {"ret_base": 246, "jul_ach": 78, "aug_ach": 63, "sep_ach": 0, "total_ach": 141, "gap_02": 155, "gap_022": 160, "gap_025": 167, "gap_028": 174, "gv_base_q1": 26, "gv_base_aug": 15, "jul_ret": 14, "aug_ret": 0, "sep_ret": 0, "q2_ach": 14, "gr": -0.4615, "earning": 291600},
-    "michelin": {"avg_retail": 3185, "category": "Michelin Gold", "ytd_cy": 148, "ytd_ly": 141, "growth": 0.0496, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 63, "aug_vahan": 71, "sep_vahan": 82, "jun_vahan": 60, "lm_vahan_tgt": null, "vahan_ach_jul": 83, "gap": null}
-  },
-  "53NE": {
-    "code": "53NE",
-    "password": "53NEKTL",
-    "name": "KTL",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 40, "all_model_ws_pct": 0, "gv_sigma_ws": 5, "gv_delta_ws": 11, "payout_base": 345000, "payout_top": 530000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 4, "gap": -4, "earning_top": 6000, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 10, "retail_pct": 0},
-    "elevate": {"base": 0, "bi_jul": 53, "bi_aug": 48, "bi_sep": 6, "bi_ach": 107, "gap_bi_0": -107, "gap_bi_02": -107, "gap_bi_04": -107, "gap_bi_06": -107, "gr_bi": 0, "dms_jul": 56, "dms_aug": 40, "dms_sep": 0, "dms_ach": 96, "gap_dms_0": -96, "gap_dms_02": -96, "gap_dms_04": -96, "gap_dms_06": -96, "gr_dms": 0, "retail_base_bi": 0, "jul_bi": 144, "aug_bi": 136, "sep_bi": 10, "total_bi": 290, "growth_bi": null, "jul_dms": 144, "aug_dms": 128, "sep_dms": 0, "total_dms": 272, "growth_dms": 0, "incremental": 0, "earning": 0},
-    "nac": {"ret_base": 0, "jul_ach": 145, "aug_ach": 128, "sep_ach": 0, "total_ach": 273, "gap_02": -273, "gap_022": -273, "gap_025": -273, "gap_028": -273, "gv_base_q1": 0, "gv_base_aug": 0, "jul_ret": 26, "aug_ret": 24, "sep_ret": 1, "q2_ach": 51, "gr": null, "earning": 639000},
-    "michelin": {"avg_retail": 4372, "category": "Michelin Gold", "ytd_cy": 292, "ytd_ly": 0, "growth": 0, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 0, "aug_vahan": 0, "sep_vahan": 0, "jun_vahan": 0, "lm_vahan_tgt": 128, "vahan_ach_jul": 149, "gap": -21}
-  },
-  "30NB": {
-    "code": "30NB",
-    "password": "30NBNikunj",
-    "name": "Nikunj",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 17, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 1, "payout_base": 20000, "payout_top": 30000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 2, "gap": -2, "earning_top": 3000, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 3, "retail_pct": 0},
-    "elevate": {"base": 61, "bi_jul": 23, "bi_aug": 35, "bi_sep": 2, "bi_ach": 60, "gap_bi_0": 1, "gap_bi_02": 3, "gap_bi_04": 4, "gap_bi_06": 5, "gr_bi": -0.0164, "dms_jul": 20, "dms_aug": 30, "dms_sep": 0, "dms_ach": 50, "gap_dms_0": 11, "gap_dms_02": 13, "gap_dms_04": 14, "gap_dms_06": 15, "gr_dms": -0.1803, "retail_base_bi": 173, "jul_bi": 75, "aug_bi": 59, "sep_bi": 3, "total_bi": 137, "growth_bi": -0.2081, "jul_dms": 51, "aug_dms": 75, "sep_dms": 0, "total_dms": 126, "growth_dms": -0.2717, "incremental": 0.0913, "earning": 0},
-    "nac": {"ret_base": 178, "jul_ach": 51, "aug_ach": 77, "sep_ach": 0, "total_ach": 128, "gap_02": 86, "gap_022": 90, "gap_025": 95, "gap_028": 100, "gv_base_q1": 28, "gv_base_aug": 4, "jul_ret": 4, "aug_ret": 6, "sep_ret": 1, "q2_ach": 11, "gr": -0.6071, "earning": 284400},
-    "michelin": {"avg_retail": 5015, "category": "Michelin Gold", "ytd_cy": 136, "ytd_ly": 122, "growth": 0.1148, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 56, "aug_vahan": 58, "sep_vahan": 64, "jun_vahan": 49, "lm_vahan_tgt": 71, "vahan_ach_jul": 69, "gap": 2}
-  },
-  "AUNA": {
-    "code": "AUNA",
-    "password": "AUNANimar",
-    "name": "Nimar",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 7, "all_model_ws_pct": 0, "gv_sigma_ws": 2, "gv_delta_ws": 1, "payout_base": 70000, "payout_top": 110000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 6, "retail_pct": 0},
-    "elevate": {"base": 70, "bi_jul": 19, "bi_aug": 17, "bi_sep": 3, "bi_ach": 39, "gap_bi_0": 31, "gap_bi_02": 33, "gap_bi_04": 34, "gap_bi_06": 36, "gr_bi": -0.4429, "dms_jul": 20, "dms_aug": 14, "dms_sep": 0, "dms_ach": 34, "gap_dms_0": 36, "gap_dms_02": 38, "gap_dms_04": 39, "gap_dms_06": 41, "gr_dms": -0.5143, "retail_base_bi": 203, "jul_bi": 50, "aug_bi": 71, "sep_bi": 6, "total_bi": 127, "growth_bi": -0.3744, "jul_dms": 67, "aug_dms": 48, "sep_dms": 0, "total_dms": 115, "growth_dms": -0.4335, "incremental": -0.0808, "earning": 0},
-    "nac": {"ret_base": 214, "jul_ach": 68, "aug_ach": 49, "sep_ach": 0, "total_ach": 117, "gap_02": 140, "gap_022": 145, "gap_025": 151, "gap_028": 157, "gv_base_q1": 33, "gv_base_aug": 7, "jul_ret": 12, "aug_ret": 11, "sep_ret": 0, "q2_ach": 23, "gr": -0.303, "earning": 246600},
-    "michelin": {"avg_retail": 3998, "category": "Michelin Gold", "ytd_cy": 123, "ytd_ly": 122, "growth": 0.0082, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 65, "aug_vahan": 46, "sep_vahan": 93, "jun_vahan": 53, "lm_vahan_tgt": null, "vahan_ach_jul": 72, "gap": null}
-  },
-  "53NB": {
-    "code": "53NB",
-    "password": "53NBOcean",
-    "name": "Ocean",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 34, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 1, "payout_base": 20000, "payout_top": 30000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 1, "gap_bi": 0, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 9, "gap": -9, "earning_top": 13500, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 17, "retail_pct": 0},
-    "elevate": {"base": 340, "bi_jul": 91, "bi_aug": 80, "bi_sep": 11, "bi_ach": 182, "gap_bi_0": 158, "gap_bi_02": 165, "gap_bi_04": 172, "gap_bi_06": 179, "gr_bi": -0.4647, "dms_jul": 89, "dms_aug": 84, "dms_sep": 0, "dms_ach": 173, "gap_dms_0": 167, "gap_dms_02": 174, "gap_dms_04": 181, "gap_dms_06": 188, "gr_dms": -0.4912, "retail_base_bi": 719, "jul_bi": 224, "aug_bi": 199, "sep_bi": 17, "total_bi": 440, "growth_bi": -0.388, "jul_dms": 216, "aug_dms": 195, "sep_dms": 0, "total_dms": 411, "growth_dms": -0.4284, "incremental": -0.0628, "earning": 0},
-    "nac": {"ret_base": 744, "jul_ach": 219, "aug_ach": 199, "sep_ach": 0, "total_ach": 418, "gap_02": 475, "gap_022": 490, "gap_025": 512, "gap_028": 535, "gv_base_q1": 99, "gv_base_aug": 43, "jul_ret": 53, "aug_ret": 41, "sep_ret": 1, "q2_ach": 95, "gr": -0.0404, "earning": 894600},
-    "michelin": {"avg_retail": 7408, "category": "Michelin Platinum", "ytd_cy": 416, "ytd_ly": 491, "growth": -0.1527, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 228, "aug_vahan": 237, "sep_vahan": 255, "jun_vahan": 171, "lm_vahan_tgt": null, "vahan_ach_jul": 211, "gap": null}
-  },
-  "53NA": {
-    "code": "53NA",
-    "password": "53NAPatel",
-    "name": "Patel",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 32, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 7, "retail_pct": 0},
-    "elevate": {"base": 226, "bi_jul": 61, "bi_aug": 73, "bi_sep": 4, "bi_ach": 138, "gap_bi_0": 88, "gap_bi_02": 93, "gap_bi_04": 98, "gap_bi_06": 102, "gr_bi": -0.3894, "dms_jul": 62, "dms_aug": 62, "dms_sep": 0, "dms_ach": 124, "gap_dms_0": 102, "gap_dms_02": 107, "gap_dms_04": 112, "gap_dms_06": 116, "gr_dms": -0.4513, "retail_base_bi": 507, "jul_bi": 169, "aug_bi": 151, "sep_bi": 7, "total_bi": 327, "growth_bi": -0.355, "jul_dms": 163, "aug_dms": 132, "sep_dms": 0, "total_dms": 295, "growth_dms": -0.4181, "incremental": -0.0332, "earning": 0},
-    "nac": {"ret_base": 526, "jul_ach": 165, "aug_ach": 132, "sep_ach": 0, "total_ach": 297, "gap_02": 335, "gap_022": 345, "gap_025": 361, "gap_028": 377, "gv_base_q1": 39, "gv_base_aug": 11, "jul_ret": 26, "aug_ret": 8, "sep_ret": 1, "q2_ach": 35, "gr": -0.1026, "earning": 693000},
-    "michelin": {"avg_retail": 8333, "category": "Michelin Platinum", "ytd_cy": 280, "ytd_ly": 321, "growth": -0.1277, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 138, "aug_vahan": 156, "sep_vahan": 212, "jun_vahan": 106, "lm_vahan_tgt": null, "vahan_ach_jul": 163, "gap": null}
-  },
-  "30NA": {
-    "code": "30NA",
-    "password": "30NAPrem",
-    "name": "Prem",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 38, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 4, "gap": -4, "earning_top": 6000, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 19, "retail_pct": 0},
-    "elevate": {"base": 153, "bi_jul": 78, "bi_aug": 54, "bi_sep": 7, "bi_ach": 139, "gap_bi_0": 14, "gap_bi_02": 18, "gap_bi_04": 21, "gap_bi_06": 24, "gr_bi": -0.0915, "dms_jul": 75, "dms_aug": 48, "dms_sep": 0, "dms_ach": 123, "gap_dms_0": 30, "gap_dms_02": 34, "gap_dms_04": 37, "gap_dms_06": 40, "gr_dms": -0.1961, "retail_base_bi": 373, "jul_bi": 162, "aug_bi": 135, "sep_bi": 19, "total_bi": 316, "growth_bi": -0.1528, "jul_dms": 151, "aug_dms": 114, "sep_dms": 0, "total_dms": 265, "growth_dms": -0.2895, "incremental": 0.0935, "earning": 0},
-    "nac": {"ret_base": 381, "jul_ach": 151, "aug_ach": 115, "sep_ach": 0, "total_ach": 266, "gap_02": 192, "gap_022": 199, "gap_025": 211, "gap_028": 222, "gv_base_q1": 34, "gv_base_aug": 14, "jul_ret": 20, "aug_ret": 19, "sep_ret": 0, "q2_ach": 39, "gr": 0.1471, "earning": 671400},
-    "michelin": {"avg_retail": 8043, "category": "Michelin Platinum", "ytd_cy": 272, "ytd_ly": 235, "growth": 0.1574, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 108, "aug_vahan": 118, "sep_vahan": 135, "jun_vahan": 97, "lm_vahan_tgt": null, "vahan_ach_jul": 148, "gap": null}
-  },
-  "03NC": {
-    "code": "03NC",
-    "password": "03NCRajrup",
-    "name": "Rajrup",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 26, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 6, "payout_base": 120000, "payout_top": 180000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 12, "gap": -12, "earning_top": 18000, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 3, "retail_pct": 0},
-    "elevate": {"base": 153, "bi_jul": 37, "bi_aug": 54, "bi_sep": 2, "bi_ach": 93, "gap_bi_0": 60, "gap_bi_02": 64, "gap_bi_04": 67, "gap_bi_06": 70, "gr_bi": -0.3922, "dms_jul": 48, "dms_aug": 47, "dms_sep": 0, "dms_ach": 95, "gap_dms_0": 58, "gap_dms_02": 62, "gap_dms_04": 65, "gap_dms_06": 68, "gr_dms": -0.3791, "retail_base_bi": 406, "jul_bi": 98, "aug_bi": 124, "sep_bi": 3, "total_bi": 225, "growth_bi": -0.4458, "jul_dms": 107, "aug_dms": 114, "sep_dms": 0, "total_dms": 221, "growth_dms": -0.4557, "incremental": 0.0766, "earning": 0},
-    "nac": {"ret_base": 434, "jul_ach": 108, "aug_ach": 115, "sep_ach": 0, "total_ach": 223, "gap_02": 298, "gap_022": 307, "gap_025": 320, "gap_028": 333, "gv_base_q1": 56, "gv_base_aug": 15, "jul_ret": 22, "aug_ret": 17, "sep_ret": 0, "q2_ach": 39, "gr": -0.3036, "earning": 489600},
-    "michelin": {"avg_retail": 5184, "category": "Michelin Gold", "ytd_cy": 251, "ytd_ly": 223, "growth": 0.1256, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 99, "aug_vahan": 110, "sep_vahan": 155, "jun_vahan": 76, "lm_vahan_tgt": 119, "vahan_ach_jul": 126, "gap": -7}
-  },
-  "53ND": {
-    "code": "53ND",
-    "password": "53NDRana",
-    "name": "Rana",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 0, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 0, "retail_pct": 0},
-    "elevate": {"base": 81, "bi_jul": 0, "bi_aug": 0, "bi_sep": 0, "bi_ach": 0, "gap_bi_0": 81, "gap_bi_02": 83, "gap_bi_04": 85, "gap_bi_06": 86, "gr_bi": -1, "dms_jul": 0, "dms_aug": 0, "dms_sep": 0, "dms_ach": 0, "gap_dms_0": 81, "gap_dms_02": 83, "gap_dms_04": 85, "gap_dms_06": 86, "gr_dms": -1, "retail_base_bi": 170, "jul_bi": 0, "aug_bi": 0, "sep_bi": 0, "total_bi": 0, "growth_bi": -1, "jul_dms": 0, "aug_dms": 0, "sep_dms": 0, "total_dms": 0, "growth_dms": -1, "incremental": 0, "earning": 0},
-    "nac": {"ret_base": 175, "jul_ach": 0, "aug_ach": 0, "sep_ach": 0, "total_ach": 0, "gap_02": 210, "gap_022": 214, "gap_025": 219, "gap_028": 224, "gv_base_q1": 16, "gv_base_aug": 2, "jul_ret": 0, "aug_ret": 0, "sep_ret": 0, "q2_ach": 0, "gr": -1, "earning": 0},
-    "michelin": {"avg_retail": 1322, "category": "Michelin Gold", "ytd_cy": 0, "ytd_ly": 99, "growth": -1, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 58, "aug_vahan": 38, "sep_vahan": 68, "jun_vahan": 49, "lm_vahan_tgt": null, "vahan_ach_jul": 0, "gap": null}
-  },
-  "53NC": {
-    "code": "53NC",
-    "password": "53NCRukmani",
-    "name": "Rukmani",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 19, "all_model_ws_pct": 0, "gv_sigma_ws": 3, "gv_delta_ws": 2, "payout_base": 115000, "payout_top": 180000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 5, "gap": -5, "earning_top": 7500, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 4, "retail_pct": 0},
-    "elevate": {"base": 118, "bi_jul": 34, "bi_aug": 32, "bi_sep": 2, "bi_ach": 68, "gap_bi_0": 50, "gap_bi_02": 53, "gap_bi_04": 55, "gap_bi_06": 58, "gr_bi": -0.4237, "dms_jul": 46, "dms_aug": 35, "dms_sep": 0, "dms_ach": 81, "gap_dms_0": 37, "gap_dms_02": 40, "gap_dms_04": 42, "gap_dms_06": 45, "gr_dms": -0.3136, "retail_base_bi": 456, "jul_bi": 85, "aug_bi": 97, "sep_bi": 4, "total_bi": 186, "growth_bi": -0.5921, "jul_dms": 144, "aug_dms": 119, "sep_dms": 0, "total_dms": 263, "growth_dms": -0.4232, "incremental": 0.1097, "earning": 0},
-    "nac": {"ret_base": 468, "jul_ach": 147, "aug_ach": 121, "sep_ach": 0, "total_ach": 268, "gap_02": 294, "gap_022": 303, "gap_025": 317, "gap_028": 332, "gv_base_q1": 98, "gv_base_aug": 44, "jul_ret": 16, "aug_ret": 19, "sep_ret": 1, "q2_ach": 36, "gr": -0.6327, "earning": 446400},
-    "michelin": {"avg_retail": 6206, "category": "Michelin Platinum", "ytd_cy": 223, "ytd_ly": 303, "growth": -0.264, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 127, "aug_vahan": 149, "sep_vahan": 149, "jun_vahan": 95, "lm_vahan_tgt": 143, "vahan_ach_jul": 120, "gap": 23}
-  },
-  "54NB": {
-    "code": "54NB",
-    "password": "54NBShubh",
-    "name": "Shubh",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 1, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 17, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 1, "gap_bi_09": -1, "gap_bi_095": 1, "gap_bi_1": -1, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 1, "gap": -1, "earning_top": 1500, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 2, "retail_pct": 0},
-    "elevate": {"base": 108, "bi_jul": 29, "bi_aug": 32, "bi_sep": 1, "bi_ach": 62, "gap_bi_0": 46, "gap_bi_02": 49, "gap_bi_04": 51, "gap_bi_06": 53, "gr_bi": -0.4259, "dms_jul": 35, "dms_aug": 25, "dms_sep": 0, "dms_ach": 60, "gap_dms_0": 48, "gap_dms_02": 51, "gap_dms_04": 53, "gap_dms_06": 55, "gr_dms": -0.4444, "retail_base_bi": 256, "jul_bi": 76, "aug_bi": 96, "sep_bi": 2, "total_bi": 174, "growth_bi": -0.3203, "jul_dms": 98, "aug_dms": 78, "sep_dms": 0, "total_dms": 176, "growth_dms": -0.3125, "incremental": -0.1319, "earning": 0},
-    "nac": {"ret_base": 262, "jul_ach": 98, "aug_ach": 78, "sep_ach": 0, "total_ach": 176, "gap_02": 139, "gap_022": 144, "gap_025": 152, "gap_028": 160, "gv_base_q1": 52, "gv_base_aug": 16, "jul_ret": 11, "aug_ret": 15, "sep_ret": 1, "q2_ach": 27, "gr": -0.4808, "earning": 394200},
-    "michelin": {"avg_retail": 4759, "category": "Michelin Gold", "ytd_cy": 176, "ytd_ly": 169, "growth": 0.0414, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 96, "aug_vahan": 65, "sep_vahan": 89, "jun_vahan": 76, "lm_vahan_tgt": 86, "vahan_ach_jul": 98, "gap": -12}
-  },
-  "54NC": {
-    "code": "54NC",
-    "password": "54NCStandard",
-    "name": "Standard",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 25, "all_model_ws_pct": 0, "gv_sigma_ws": 5, "gv_delta_ws": 0, "payout_base": 125000, "payout_top": 200000},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 3, "gap": -3, "earning_top": 4500, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 6, "retail_pct": 0},
-    "elevate": {"base": 152, "bi_jul": 57, "bi_aug": 47, "bi_sep": 4, "bi_ach": 108, "gap_bi_0": 44, "gap_bi_02": 48, "gap_bi_04": 51, "gap_bi_06": 54, "gr_bi": -0.2895, "dms_jul": 43, "dms_aug": 39, "dms_sep": 0, "dms_ach": 82, "gap_dms_0": 70, "gap_dms_02": 74, "gap_dms_04": 77, "gap_dms_06": 80, "gr_dms": -0.4605, "retail_base_bi": 354, "jul_bi": 162, "aug_bi": 129, "sep_bi": 6, "total_bi": 297, "growth_bi": -0.161, "jul_dms": 131, "aug_dms": 107, "sep_dms": 0, "total_dms": 238, "growth_dms": -0.3277, "incremental": -0.1328, "earning": 0},
-    "nac": {"ret_base": 378, "jul_ach": 131, "aug_ach": 108, "sep_ach": 0, "total_ach": 239, "gap_02": 215, "gap_022": 223, "gap_025": 234, "gap_028": 245, "gv_base_q1": 66, "gv_base_aug": 13, "jul_ret": 22, "aug_ret": 24, "sep_ret": 0, "q2_ach": 46, "gr": -0.303, "earning": 610200},
-    "michelin": {"avg_retail": 5343, "category": "Michelin Gold", "ytd_cy": 267, "ytd_ly": 274, "growth": -0.0255, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 144, "aug_vahan": 125, "sep_vahan": 117, "jun_vahan": 102, "lm_vahan_tgt": null, "vahan_ach_jul": 155, "gap": null}
-  },
-  "3QNA": {
-    "code": "3QNA",
-    "password": "3QNAUnitara",
-    "name": "Unitara",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 7, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 1, "retail_pct": 0},
-    "elevate": {"base": 21, "bi_jul": 13, "bi_aug": 11, "bi_sep": 1, "bi_ach": 25, "gap_bi_0": -4, "gap_bi_02": -4, "gap_bi_04": -4, "gap_bi_06": -3, "gr_bi": 0.1905, "dms_jul": 14, "dms_aug": 9, "dms_sep": 0, "dms_ach": 23, "gap_dms_0": -2, "gap_dms_02": -2, "gap_dms_04": -2, "gap_dms_06": -1, "gr_dms": 0.0952, "retail_base_bi": 97, "jul_bi": 45, "aug_bi": 30, "sep_bi": 1, "total_bi": 76, "growth_bi": -0.2165, "jul_dms": 34, "aug_dms": 25, "sep_dms": 0, "total_dms": 59, "growth_dms": -0.3918, "incremental": 0.487, "earning": 0},
-    "nac": {"ret_base": 99, "jul_ach": 34, "aug_ach": 25, "sep_ach": 0, "total_ach": 59, "gap_02": 60, "gap_022": 62, "gap_025": 65, "gap_028": 68, "gv_base_q1": 8, "gv_base_aug": 3, "jul_ret": 6, "aug_ret": 4, "sep_ret": 0, "q2_ach": 10, "gr": 0.25, "earning": 136800},
-    "michelin": {"avg_retail": 2874, "category": "Michelin Gold", "ytd_cy": 65, "ytd_ly": 77, "growth": -0.1558, "ro_vahan_grw": 0.0072, "qualification": "NO", "jul_vahan": 29, "aug_vahan": 27, "sep_vahan": 32, "jun_vahan": 31, "lm_vahan_tgt": 43, "vahan_ach_jul": 37, "gap": 6}
-  },
-  "3WNA": {
-    "code": "3WNA",
-    "password": "3WNAYug",
-    "name": "Yug",
-    "wtd": {"gv_retail_target": null, "gv_retail_ach": 0, "gv_retail_pct": 0, "all_model_ws_target": null, "all_model_ws_ach": 4, "all_model_ws_pct": 0, "gv_sigma_ws": 0, "gv_delta_ws": 0, "payout_base": 0, "payout_top": 0},
-    "hybrid": {"ret_tgt": 1, "ach_net_bi": 0, "gap_bi": 1, "ach_dms": 0, "gap_dms": 1, "earning": 0, "ws_ach_pct": 0},
-    "mega": {"ret_tgt": null, "ach_net_bi": 0, "gap_bi_09": 0, "gap_bi_095": 0, "gap_bi_1": 0, "ach_dms": 0, "gap_dms_09": 0, "gap_dms_095": 0, "gap_dms_1": 0, "strong_hybrid": 0, "invicto": 0, "xl6": 0, "jimny": 0, "earning": 0},
-    "vahan": {"tgt": null, "ach": 0, "gap": 0, "earning_top": 0, "vahan_ach_40": 0, "retail_tgt": null, "retail_ach": 1, "retail_pct": 0},
-    "elevate": {"base": 53, "bi_jul": 17, "bi_aug": 12, "bi_sep": 1, "bi_ach": 30, "gap_bi_0": 23, "gap_bi_02": 25, "gap_bi_04": 26, "gap_bi_06": 27, "gr_bi": -0.434, "dms_jul": 19, "dms_aug": 13, "dms_sep": 0, "dms_ach": 32, "gap_dms_0": 21, "gap_dms_02": 23, "gap_dms_04": 24, "gap_dms_06": 25, "gr_dms": -0.3962, "retail_base_bi": 140, "jul_bi": 34, "aug_bi": 30, "sep_bi": 1, "total_bi": 65, "growth_bi": -0.5357, "jul_dms": 40, "aug_dms": 29, "sep_dms": 0, "total_dms": 69, "growth_dms": -0.5071, "incremental": 0.1109, "earning": 0},
-    "nac": {"ret_base": 143, "jul_ach": 41, "aug_ach": 29, "sep_ach": 0, "total_ach": 70, "gap_02": 102, "gap_022": 105, "gap_025": 109, "gap_028": 114, "gv_base_q1": 8, "gv_base_aug": 1, "jul_ret": 6, "aug_ret": 0, "sep_ret": 0, "q2_ach": 6, "gr": -0.25, "earning": 126000},
-    "michelin": {"avg_retail": 2821, "category": "Michelin Gold", "ytd_cy": 72, "ytd_ly": 70, "growth": 0.0286, "ro_vahan_grw": 0.0072, "qualification": "YES", "jul_vahan": 35, "aug_vahan": 31, "sep_vahan": 68, "jun_vahan": 30, "lm_vahan_tgt": null, "vahan_ach_jul": 43, "gap": null}
-  }
-};
+      "G1NA": {
+        "code": "G1NA", "password": "G1NAAdinath", "name": "Adinath",
+        "vahan": { "tgt": 145, "ach": 68, "pend": 12, "pipe": 80, "gap": 65, "cur": 204000, "pot": 435000 },
+        "pp": { "base": 537, "req": 564, "ach": 66, "gap": 498, "pq1": 87, "pcur": 54, "pgr": -0.3793, "pot": 1269000, "cur": 148500 },
+        "psl": { "grp": "B", "rank": "-", "sb": 383, "sa": 66, "sg": -0.8277, "pb": 322, "pr": 54, "pgr": -0.8323, "qb": 110, "qa": 66, "qg": -0.4 },
+        "nac": { "base": 422, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 452, "gvq3": 19, "req": 24, "gv_ach": null, "gv_gap": 24, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "D7NA": {
+        "code": "D7NA", "password": "D7NACity", "name": "City Cars",
+        "vahan": { "tgt": 165, "ach": 70, "pend": 37, "pipe": 107, "gap": 58, "cur": 210000, "pot": 495000 },
+        "pp": { "base": 715, "req": 751, "ach": 87, "gap": 664, "pq1": 109, "pcur": 68, "pgr": -0.3761, "pot": 1689750, "cur": 195750 },
+        "psl": { "grp": "B", "rank": "-", "sb": 470, "sa": 87, "sg": -0.8149, "pb": 411, "pr": 68, "pgr": -0.8345, "qb": 134, "qa": 87, "qg": -0.3507 },
+        "nac": { "base": 559, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 599, "gvq3": 26, "req": 33, "gv_ach": null, "gv_gap": 33, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "KMNA": {
+        "code": "KMNA", "password": "KMNAInfinity", "name": "Infinity",
+        "vahan": { "tgt": 35, "ach": 26, "pend": 8, "pipe": 34, "gap": 1, "cur": 78000, "pot": 105000 },
+        "pp": { "base": 170, "req": 179, "ach": 31, "gap": 148, "pq1": 23, "pcur": 25, "pgr": 0.087, "pot": 402750, "cur": 69750 },
+        "psl": { "grp": "D", "rank": "-", "sb": 131, "sa": 31, "sg": -0.7634, "pb": 108, "pr": 25, "pgr": -0.7685, "qb": 30, "qa": 31, "qg": 0.0333 },
+        "nac": { "base": 133, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 143, "gvq3": 4, "req": 5, "gv_ach": null, "gv_gap": 5, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "03NB": {
+        "code": "03NB", "password": "03NBJeewan", "name": "Jeewan",
+        "vahan": { "tgt": 100, "ach": 47, "pend": 13, "pipe": 60, "gap": 40, "cur": 141000, "pot": 300000 },
+        "pp": { "base": 768, "req": 806, "ach": 56, "gap": 750, "pq1": 56, "pcur": 33, "pgr": -0.4107, "pot": 1813500, "cur": 126000 },
+        "psl": { "grp": "B", "rank": "-", "sb": 633, "sa": 56, "sg": -0.9115, "pb": 426, "pr": 33, "pgr": -0.9225, "qb": 94, "qa": 56, "qg": -0.4043 },
+        "nac": { "base": 593, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 635, "gvq3": 20, "req": 25, "gv_ach": null, "gv_gap": 25, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "U5NA": {
+        "code": "U5NA", "password": "U5NAKamthi", "name": "Kamthi Motors",
+        "vahan": { "tgt": 105, "ach": 58, "pend": 17, "pipe": 75, "gap": 30, "cur": 174000, "pot": 315000 },
+        "pp": { "base": 493, "req": 518, "ach": 69, "gap": 449, "pq1": 74, "pcur": 65, "pgr": -0.1216, "pot": 1165500, "cur": 155250 },
+        "psl": { "grp": "C", "rank": "-", "sb": 347, "sa": 69, "sg": -0.8012, "pb": 338, "pr": 65, "pgr": -0.8077, "qb": 79, "qa": 69, "qg": -0.1266 },
+        "nac": { "base": 376, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 403, "gvq3": 19, "req": 24, "gv_ach": null, "gv_gap": 24, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "53NE": {
+        "code": "53NE", "password": "53NEKTL", "name": "KTL",
+        "vahan": { "tgt": 175, "ach": 103, "pend": 38, "pipe": 141, "gap": 34, "cur": 309000, "pot": 525000 },
+        "pp": { "base": 409, "req": 429, "ach": 125, "gap": 304, "pq1": 70, "pcur": 52, "pgr": -0.2571, "pot": 965250, "cur": 281250 },
+        "psl": { "grp": "National A", "rank": "-", "sb": 199, "sa": 125, "sg": -0.3719, "pb": 117, "pr": 52, "pgr": -0.5556, "qb": 122, "qa": 125, "qg": 0.0246 },
+        "nac": { "base": 405, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 434, "gvq3": 15, "req": 19, "gv_ach": null, "gv_gap": 19, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "30NB": {
+        "code": "30NB", "password": "30NBNikunj", "name": "Nikunj",
+        "vahan": { "tgt": 110, "ach": 45, "pend": 41, "pipe": 86, "gap": 24, "cur": 135000, "pot": 330000 },
+        "pp": { "base": 360, "req": 378, "ach": 74, "gap": 304, "pq1": 38, "pcur": 32, "pgr": -0.1579, "pot": 850500, "cur": 166500 },
+        "psl": { "grp": "B", "rank": "-", "sb": 272, "sa": 74, "sg": -0.7279, "pb": 168, "pr": 32, "pgr": -0.8095, "qb": 63, "qa": 74, "qg": 0.1746 },
+        "nac": { "base": 284, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 304, "gvq3": 11, "req": 14, "gv_ach": null, "gv_gap": 14, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "AUNA": {
+        "code": "AUNA", "password": "AUNANimar", "name": "Nimar Motors",
+        "vahan": { "tgt": 80, "ach": 56, "pend": 19, "pipe": 75, "gap": 5, "cur": 168000, "pot": 240000 },
+        "pp": { "base": 478, "req": 502, "ach": 75, "gap": 427, "pq1": 43, "pcur": 46, "pgr": 0.0698, "pot": 1129500, "cur": 168750 },
+        "psl": { "grp": "B", "rank": "-", "sb": 336, "sa": 75, "sg": -0.7768, "pb": 250, "pr": 46, "pgr": -0.816, "qb": 59, "qa": 75, "qg": 0.2712 },
+        "nac": { "base": 369, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 395, "gvq3": 22, "req": 28, "gv_ach": null, "gv_gap": 28, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "53NB": {
+        "code": "53NB", "password": "53NBOcean", "name": "Ocean Group",
+        "vahan": { "tgt": 305, "ach": 173, "pend": 78, "pipe": 251, "gap": 54, "cur": 519000, "pot": 915000 },
+        "pp": { "base": 1489, "req": 1563, "ach": 229, "gap": 1334, "pq1": 125, "pcur": 110, "pgr": -0.12, "pot": 3516750, "cur": 515250 },
+        "psl": { "grp": "A", "rank": "-", "sb": 985, "sa": 229, "sg": -0.7675, "pb": 631, "pr": 110, "pgr": -0.8257, "qb": 225, "qa": 229, "qg": 0.0178 },
+        "nac": { "base": 1146, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 1227, "gvq3": 80, "req": 100, "gv_ach": null, "gv_gap": 100, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "53NA": {
+        "code": "53NA", "password": "53NAPatel", "name": "Patel Group",
+        "vahan": { "tgt": 215, "ach": 114, "pend": 61, "pipe": 175, "gap": 40, "cur": 342000, "pot": 645000 },
+        "pp": { "base": 923, "req": 969, "ach": 162, "gap": 807, "pq1": 98, "pcur": 102, "pgr": 0.0408, "pot": 2180250, "cur": 364500 },
+        "psl": { "grp": "A", "rank": "-", "sb": 649, "sa": 162, "sg": -0.7504, "pb": 480, "pr": 102, "pgr": -0.7875, "qb": 163, "qa": 162, "qg": -0.0061 },
+        "nac": { "base": 680, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 728, "gvq3": 34, "req": 43, "gv_ach": null, "gv_gap": 43, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "30NA": {
+        "code": "30NA", "password": "30NAPrem", "name": "Prem Group",
+        "vahan": { "tgt": 195, "ach": 116, "pend": 26, "pipe": 142, "gap": 53, "cur": 348000, "pot": 585000 },
+        "pp": { "base": 542, "req": 569, "ach": 132, "gap": 437, "pq1": 78, "pcur": 47, "pgr": -0.3974, "pot": 1280250, "cur": 297000 },
+        "psl": { "grp": "National A", "rank": "-", "sb": 485, "sa": 132, "sg": -0.7278, "pb": 294, "pr": 47, "pgr": -0.8401, "qb": 148, "qa": 132, "qg": -0.1081 },
+        "nac": { "base": 384, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 411, "gvq3": 15, "req": 19, "gv_ach": null, "gv_gap": 19, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "03NC": {
+        "code": "03NC", "password": "03NCRajrup", "name": "Rajrup",
+        "vahan": { "tgt": 185, "ach": 118, "pend": 17, "pipe": 135, "gap": 50, "cur": 354000, "pot": 555000 },
+        "pp": { "base": 949, "req": 996, "ach": 115, "gap": 881, "pq1": 80, "pcur": 55, "pgr": -0.3125, "pot": 2241000, "cur": 258750 },
+        "psl": { "grp": "B", "rank": "-", "sb": 653, "sa": 115, "sg": -0.8239, "pb": 493, "pr": 55, "pgr": -0.8884, "qb": 129, "qa": 115, "qg": -0.1085 },
+        "nac": { "base": 719, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 770, "gvq3": 42, "req": 53, "gv_ach": null, "gv_gap": 53, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "53NC": {
+        "code": "53NC", "password": "53NCRukmani", "name": "Rukmani",
+        "vahan": { "tgt": 170, "ach": 104, "pend": 55, "pipe": 159, "gap": 11, "cur": 312000, "pot": 510000 },
+        "pp": { "base": 851, "req": 894, "ach": 124, "gap": 770, "pq1": 55, "pcur": 62, "pgr": 0.1273, "pot": 2011500, "cur": 279000 },
+        "psl": { "grp": "A", "rank": "-", "sb": 645, "sa": 124, "sg": -0.8078, "pb": 442, "pr": 62, "pgr": -0.8597, "qb": 103, "qa": 124, "qg": 0.2039 },
+        "nac": { "base": 643, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 689, "gvq3": 46, "req": 58, "gv_ach": null, "gv_gap": 58, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "54ND": {
+        "code": "54ND", "password": "54NBShubh", "name": "Shubh",
+        "vahan": { "tgt": 125, "ach": 80, "pend": 16, "pipe": 96, "gap": 29, "cur": 240000, "pot": 375000 },
+        "pp": { "base": 588, "req": 617, "ach": 89, "gap": 528, "pq1": 90, "pcur": 79, "pgr": -0.1222, "pot": 1388250, "cur": 200250 },
+        "psl": { "grp": "B", "rank": "-", "sb": 391, "sa": 89, "sg": -0.7724, "pb": 367, "pr": 79, "pgr": -0.7847, "qb": 100, "qa": 89, "qg": -0.11 },
+        "nac": { "base": 468, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 501, "gvq3": 27, "req": 34, "gv_ach": null, "gv_gap": 34, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "54NC": {
+        "code": "54NC", "password": "54NCStandard", "name": "Standard Group",
+        "vahan": { "tgt": 200, "ach": 120, "pend": 34, "pipe": 154, "gap": 46, "cur": 360000, "pot": 600000 },
+        "pp": { "base": 852, "req": 895, "ach": 135, "gap": 760, "pq1": 157, "pcur": 106, "pgr": -0.3248, "pot": 2013750, "cur": 303750 },
+        "psl": { "grp": "B", "rank": "-", "sb": 600, "sa": 135, "sg": -0.775, "pb": 551, "pr": 106, "pgr": -0.8076, "qb": 178, "qa": 135, "qg": -0.2416 },
+        "nac": { "base": 694, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 743, "gvq3": 43, "req": 54, "gv_ach": null, "gv_gap": 54, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "3QNB": {
+        "code": "3QNB", "password": "3QNAUnitara", "name": "Unitara",
+        "vahan": { "tgt": 40, "ach": 40, "pend": 4, "pipe": 44, "gap": -4, "cur": 120000, "pot": 120000 },
+        "pp": { "base": 193, "req": 203, "ach": 36, "gap": 167, "pq1": 16, "pcur": 23, "pgr": 0.4375, "pot": 456750, "cur": 81000 },
+        "psl": { "grp": "C", "rank": "-", "sb": 137, "sa": 36, "sg": -0.7372, "pb": 77, "pr": 23, "pgr": -0.7013, "qb": 38, "qa": 36, "qg": -0.0526 },
+        "nac": { "base": 152, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 163, "gvq3": 8, "req": 10, "gv_ach": null, "gv_gap": 10, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      },
+      "3WNA": {
+        "code": "3WNA", "password": "3WNAYug", "name": "Yug Cars",
+        "vahan": { "tgt": 50, "ach": 30, "pend": 7, "pipe": 37, "gap": 13, "cur": 90000, "pot": 150000 },
+        "pp": { "base": 275, "req": 289, "ach": 33, "gap": 256, "pq1": 13, "pcur": 10, "pgr": -0.2308, "pot": 650250, "cur": 74250 },
+        "psl": { "grp": "C", "rank": "-", "sb": 213, "sa": 33, "sg": -0.8451, "pb": 119, "pr": 10, "pgr": -0.916, "qb": 35, "qa": 33, "qg": -0.0571 },
+        "nac": { "base": 196, "ach": null, "g_sigma": 422, "g_delta": 431, "g_zeta": 439, "g_alpha": 210, "gvq3": 12, "req": 15, "gv_ach": null, "gv_gap": 15, "wtgt": null, "wach": null, "wpct": null, "cur": 0, "pot": 0 }
+      }
+    };
 
-    // ========== HELPERS ==========
-    function fmt(v, isPct = false, isCurrency = false) {
-      if (v === null || v === undefined || v === '' || v === '#N/A' || v === '#DIV/0!' || v === '#NA') return '—';
+    // ========== SCHEME CONDITIONS ==========
+    const CONDITIONS = {
+      "vahan": [
+        { "label": "Super Qualifying Criteria", "text": "It is compulsory to achieve atleast 40% Retail & 40% Vahan Target* for SEP-26 by 15th September’26 to qualify for any Incentive" },
+        { "label": null, "text": "It is compulsory to achieve atleast 100% Retail Target for Sep-26 to qualify for any Incentive. BI Net Retail will be considered to calculate Retail Target Achievement." },
+        { "label": null, "text": "Permanent registration done for All Models of NEXA Channel would be considered for scheme calculation and payout" },
+        { "label": null, "text": "Payout will be paid on Vahan registration issued against applicable models from 1-Sep-26 to 30-Sep-26 updated till 5th Oct’26" }
+      ],
+      "pp": [
+        { "label": "Scheme Period", "text": "September'26 to December'26" },
+        { "label": "Slabs", "text": "Slab 1 : >=0% to <3% : 700 || Slab 2 : >=3% to <5% : 1,000 || Slab 3 : >=5% : 1,500" },
+        { "label": "Additional Earning Opportunity (September)", "text": "No retail de-growth of “All Models combined retail (Excluding CNG Variants)” in Sep’26 (ie. from 1st Sep’26 - 30th Sep’26) over Q1’26-27 monthly retail average of “All Models combined retail (Excluding CNG Variants)" },
+        { "label": "Vahan / MI Condition", "text": "At least 95% of Non-cancelled DMS retail should have Vahan registration or Maruti Insurance. Retail Period: 1st Sep'26 to 31st Dec'26. Vahan/MI Period: 1st Sep'26 to 17th Jan'27 for scheme period's retail" }
+      ],
+      "psl": [
+        { "label": "Super Qualifying Condition", "text": "No net retail de-growth during Sep’26 to Nov'26 over Sep’25 to Nov'25." },
+        { "label": "Vahan / MI Condition", "text": "At least 95% of Non-cancelled DMS retail should have Vahan registration or Maruti Insurance. Retail Period: 1st Sep'26 to 31st Dec'26. Vahan/MI Period: 1st Sep'26 to 7th Jan'27 for scheme period's retail" },
+        { "label": "Ranking Condition 1", "text": "Sept to Nov - All Models (excluding CNG variants) Net retail growth during Sep’26 to Nov'26 over Sep’25 to Nov'25 (Weightage - 30%)" },
+        { "label": "Ranking Condition 2", "text": "September - Net Retail Growth (All Models) in Sep'26 over the Apr'26 to Jun'26 average monthly Net Retail" }
+      ],
+      "nac": [
+        { "label": "Target Slabs", "text": "Sigma - 0%, Delta - 2%, Zeta - 4%, Alpha - 7%" },
+        { "label": "Vahan / MI Condition", "text": "At least 95% of Non-cancelled DMS retail should have Vahan registration or Maruti Insurance. Retail Period: 1st Sep'26 to 31st Dec'26. Vahan/MI Period: 1st Sep'26 to 17th Jan'27 for scheme period's retail" },
+        { "label": "Additional Earning Opportunity of 25% (October)", "text": "Atleast 25% retail growth in Grand Vitara & e VITARA (combined) in Oct'26 over Q3'25-26 monthly average retail." },
+        { "label": null, "text": "Slab Growth shall be considered basis retail done in Q3’26-27 over Q3’25-26 (excluding Ignis)." }
+      ]
+    };
+
+    // ========== FORMATTING UTILS ==========
+    function fmt(v, type) {
+      if (v === null || v === undefined || v === '' || v === '-' || v === '#N/A' || v === '#DIV/0!' || v === '#NA') return '—';
       if (typeof v === 'number') {
-        if (isPct) return (v * 100).toFixed(1) + '%';
-        if (isCurrency) return '₹' + v.toLocaleString('en-IN');
+        if (type === 'pct') return (v * 100).toFixed(1) + '%';
+        if (type === 'cur') return '₹' + v.toLocaleString('en-IN');
         if (Number.isInteger(v)) return v.toLocaleString('en-IN');
         return v.toFixed(2);
       }
       return v;
     }
-    function cls(v) {
-      if (v === null || v === undefined) return '';
-      if (typeof v === 'number') {
-        if (v > 0) return 'positive';
-        if (v < 0) return 'negative';
-      }
+
+    function cls(v, type) {
+      if (type === 'text') return 'text';
+      if (type === 'cur') return 'cur';
+      if (type === 'pct' && typeof v === 'number') return v > 0 ? 'positive' : (v < 0 ? 'negative' : '');
       return '';
     }
 
-    // ========== LOGIN ==========
+    function metric(label, value, type) {
+      return `
+        <div class="metric-box">
+          <div class="metric-label">${label}</div>
+          <div class="metric-value ${cls(value, type)}">${fmt(value, type)}</div>
+        </div>
+      `;
+    }
+
+    function esc(s) { 
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); 
+    }
+
+    function conditionsBox(key) {
+      const items = CONDITIONS[key].map(c =>
+        `<li>${c.label ? '<strong>' + esc(c.label) + ':</strong> ' : ''}${esc(c.text)}</li>`).join('');
+      return `
+        <details class="conditions">
+          <summary>View Scheme Conditions</summary>
+          <ul>${items}</ul>
+        </details>
+      `;
+    }
+
+    // ========== LOGIN & DASHBOARD LOGIC ==========
     function handleLogin(e) {
       e.preventDefault();
       const code = document.getElementById('dealerCode').value.trim().toUpperCase();
       const pwd = document.getElementById('password').value.trim();
       const err = document.getElementById('errorMsg');
-      
       const dealer = DEALERS[code];
+      
       if (!dealer || dealer.password !== pwd) {
         err.style.display = 'block';
-        err.textContent = 'Invalid Dealer Code or Password.';
+        err.textContent = 'Invalid Dealer Code or Password. Please verify and try again.';
         return false;
       }
+      
       err.style.display = 'none';
       showDashboard(dealer);
       return false;
@@ -577,227 +643,155 @@
 
     function logout() {
       document.getElementById('dashboard').style.display = 'none';
-      document.getElementById('loginSection').style.display = 'flex';
+      document.getElementById('loginSection').style.display = 'block';
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('loginForm').reset();
-      window.scrollTo(0,0);
     }
 
     function showDashboard(d) {
       document.getElementById('loginSection').style.display = 'none';
       document.getElementById('dashboard').style.display = 'block';
-      document.getElementById('logoutBtn').style.display = 'inline-block';
+      document.getElementById('logoutBtn').style.display = 'inline-flex';
+      
       document.getElementById('dealerName').textContent = d.name;
       document.getElementById('dealerCodeDisplay').textContent = d.code;
       document.getElementById('schemesContainer').innerHTML = renderAllSchemes(d);
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ========== RENDER SCHEMES ==========
+    // ========== RENDER SCHEMES HTML ==========
     function renderAllSchemes(d) {
       return [
-        renderWTD(d.wtd),
-        renderHybrid(d.hybrid),
-        renderMega(d.mega),
-        renderVahan(d.vahan),
-        renderElevate(d.elevate),
-        renderNAC(d.nac),
-        renderMichelin(d.michelin)
+        renderVahan(d.vahan), 
+        renderPP(d.pp), 
+        renderPSL(d.psl), 
+        renderNAC(d.nac)
       ].join('');
-    }
-
-    function metric(label, value, isPct, isCur) {
-      return `<div class="metric"><div class="label">${label}</div><div class="value ${cls(value)}">${fmt(value, isPct, isCur)}</div></div>`;
-    }
-
-    function renderWTD(w) {
-      return `
-      <div class="scheme">
-        <div class="scheme-header">1. Wholesale Trade Discount</div>
-        <div class="scheme-body">
-          <div class="section-title">GV Retail</div>
-          <div class="metrics">
-            ${metric('Target', w.gv_retail_target)}
-            ${metric('Net BI Ach', w.gv_retail_ach)}
-            ${metric('Ach %', w.gv_retail_pct, true)}
-          </div>
-          <div class="section-title">All Model Wholesale</div>
-          <div class="metrics">
-            ${metric('Target', w.all_model_ws_target)}
-            ${metric('Achievement', w.all_model_ws_ach)}
-            ${metric('Ach %', w.all_model_ws_pct, true)}
-          </div>
-          <div class="section-title">GV Sigma / Delta Wholesale &amp; Payout</div>
-          <div class="metrics">
-            ${metric('GV Sigma WS', w.gv_sigma_ws)}
-            ${metric('GV Delta WS', w.gv_delta_ws)}
-            ${metric('Base Slab Payout', w.payout_base, false, true)}
-            ${metric('Top Slab Payout', w.payout_top, false, true)}
-          </div>
-        </div>
-      </div>`;
-    }
-
-    function renderHybrid(h) {
-      return `
-      <div class="scheme">
-        <div class="scheme-header">2. GV Strong Hybrid Super Cashback (Retail)</div>
-        <div class="scheme-body">
-          <div class="metrics">
-            ${metric('Retail Target', h.ret_tgt)}
-            ${metric('Ach (Net BI)', h.ach_net_bi)}
-            ${metric('Gap BI', h.gap_bi)}
-            ${metric('Ach (DMS)', h.ach_dms)}
-            ${metric('Gap DMS', h.gap_dms)}
-            ${metric('Earning', h.earning, false, true)}
-            ${metric('WS Ach %', h.ws_ach_pct, true)}
-          </div>
-          <div class="note">Qualifying condition: 95% GV Wholesale Target Achievement. Payout on Strong Hybrid retails based on achievement slabs.</div>
-        </div>
-      </div>`;
-    }
-
-    function renderMega(m) {
-      return `
-      <div class="scheme">
-        <div class="scheme-header">3. MEGA DEALER RETAIL INCENTIVE SCHEME</div>
-        <div class="scheme-body">
-          <div class="section-title">All Model Retail</div>
-          <div class="metrics">
-            ${metric('Retail Target', m.ret_tgt)}
-            ${metric('Ach Net BI', m.ach_net_bi)}
-            ${metric('Gap @90%', m.gap_bi_09)}
-            ${metric('Gap @95%', m.gap_bi_095)}
-            ${metric('Gap @100%', m.gap_bi_1)}
-          </div>
-          <div class="section-title">DMS Backed by MI</div>
-          <div class="metrics">
-            ${metric('Ach DMS', m.ach_dms)}
-            ${metric('Gap @90%', m.gap_dms_09)}
-            ${metric('Gap @95%', m.gap_dms_095)}
-            ${metric('Gap @100%', m.gap_dms_1)}
-          </div>
-          <div class="section-title">Model-wise &amp; Earning</div>
-          <div class="metrics">
-            ${metric('Strong Hybrid', m.strong_hybrid)}
-            ${metric('Invicto', m.invicto)}
-            ${metric('XL6', m.xl6)}
-            ${metric('Jimny', m.jimny)}
-            ${metric('Earning', m.earning, false, true)}
-          </div>
-        </div>
-      </div>`;
     }
 
     function renderVahan(v) {
       return `
-      <div class="scheme">
-        <div class="scheme-header">4. Sept Vahan Cashback</div>
+      <div class="scheme-card">
+        <div class="scheme-header">
+          <h3>1. Vahan Retail Cashback – October</h3>
+        </div>
+        ${conditionsBox('vahan')}
         <div class="scheme-body">
-          <div class="metrics">
+          <div class="metrics-grid">
             ${metric('Target', v.tgt)}
             ${metric('Achievement', v.ach)}
+            ${metric('Pendency', v.pend)}
+            ${metric('Total Pipeline', v.pipe)}
             ${metric('Gap', v.gap)}
-            ${metric('Earning (Top Slab)', v.earning_top, false, true)}
-            ${metric('Vahan Ach (Min 40%)', v.vahan_ach_40)}
-            ${metric('Retail Target', v.retail_tgt)}
-            ${metric('Retail Ach', v.retail_ach)}
-            ${metric('Retail Ach %', v.retail_pct, true)}
+            ${metric('Current Earnings', v.cur, 'cur')}
+            ${metric('Earning Potential', v.pot, 'cur')}
           </div>
         </div>
       </div>`;
     }
 
-    function renderElevate(e) {
+    function renderPP(p) {
       return `
-      <div class="scheme">
-        <div class="scheme-header">5. Elevate Scheme (Jul – Sep)</div>
+      <div class="scheme-card">
+        <div class="scheme-header">
+          <h3>2. Maruti Power Performer 2.0</h3>
+        </div>
+        ${conditionsBox('pp')}
         <div class="scheme-body">
-          <div class="section-title">Higher Variant – BI Retail</div>
-          <div class="metrics">
-            ${metric('Base (Jul-Sep)', e.base)}
-            ${metric('Jul', e.bi_jul)}
-            ${metric('Aug', e.bi_aug)}
-            ${metric('Sep', e.bi_sep)}
-            ${metric('Total Ach', e.bi_ach)}
-            ${metric('Growth %', e.gr_bi, true)}
+          <div class="section-title">Scheme Achievement</div>
+          <div class="metrics-grid">
+            ${metric('Base (Sep–Dec)', p.base)}
+            ${metric('Required (@5% Gr)', p.req)}
+            ${metric('Achievement', p.ach)}
+            ${metric('Gap', p.gap)}
           </div>
-          <div class="section-title">Higher Variant – DMS Backed by MI</div>
-          <div class="metrics">
-            ${metric('Jul', e.dms_jul)}
-            ${metric('Aug', e.dms_aug)}
-            ${metric('Sep', e.dms_sep)}
-            ${metric('Total Ach', e.dms_ach)}
-            ${metric('Growth %', e.gr_dms, true)}
+          
+          <div class="section-title">Additional Earning Opportunity</div>
+          <div class="metrics-grid">
+            ${metric('Petrol Retail (Q1 Avg)', p.pq1)}
+            ${metric('Current Petrol Retails', p.pcur)}
+            ${metric('Growth', p.pgr, 'pct')}
           </div>
-          <div class="section-title">Retail Growth (BI / DMS)</div>
-          <div class="metrics">
-            ${metric('BI Total (Jul+Aug+Sep)', e.total_bi)}
-            ${metric('BI Growth', e.growth_bi, true)}
-            ${metric('DMS Total', e.total_dms)}
-            ${metric('DMS Growth', e.growth_dms, true)}
-            ${metric('Incremental Growth', e.incremental, true)}
-            ${metric('Earning', e.earning, false, true)}
+          
+          <div class="section-title">Earnings Breakdown</div>
+          <div class="metrics-grid">
+            ${metric('Current Earnings', p.cur, 'cur')}
+            ${metric('Earning Potential', p.pot, 'cur')}
           </div>
-          <div class="note">Payout on Incremental Higher Variant Retails (GV, Baleno, Fronx, XL6, e Vitara). Slabs: ≥2%–&lt;4% ₹10,000 | ≥4%–&lt;6% ₹15,000 | ≥6% ₹20,000.</div>
+        </div>
+      </div>`;
+    }
+
+    function renderPSL(s) {
+      return `
+      <div class="scheme-card">
+        <div class="scheme-header">
+          <h3>3. Maruti Suzuki Premier League</h3>
+        </div>
+        ${conditionsBox('psl')}
+        <div class="scheme-body">
+          <div class="metrics-grid" style="margin-bottom: 1.5rem;">
+            ${metric('Dealer Group', s.grp, 'text')}
+            ${metric('HO Ranking', s.rank, 'text')}
+          </div>
+          
+          <div class="section-title">Super Qualifying Criteria</div>
+          <div class="metrics-grid">
+            ${metric('Retail Base (Sep–Nov)', s.sb)}
+            ${metric('Retail Achi', s.sa)}
+            ${metric('Growth %', s.sg, 'pct')}
+          </div>
+          
+          <div class="section-title">Ranking Condition 1: Sept to Nov</div>
+          <div class="metrics-grid">
+            ${metric('Petrol Base', s.pb)}
+            ${metric('Petrol Retail', s.pr)}
+            ${metric('Growth %', s.pgr, 'pct')}
+          </div>
+          
+          <div class="section-title">Ranking Condition 2: October</div>
+          <div class="metrics-grid">
+            ${metric('Q1 Retail Base', s.qb)}
+            ${metric('Achievement', s.qa)}
+            ${metric('Growth %', s.qg, 'pct')}
+          </div>
         </div>
       </div>`;
     }
 
     function renderNAC(n) {
       return `
-      <div class="scheme">
-        <div class="scheme-header">6. Q2 NAC (Retail)</div>
-        <div class="scheme-body">
-          <div class="metrics">
-            ${metric('Ret Base (Q2 DMS)', n.ret_base)}
-            ${metric('Jul Ach', n.jul_ach)}
-            ${metric('Aug Ach', n.aug_ach)}
-            ${metric('Sep Ach', n.sep_ach)}
-            ${metric('Total Ach Q1', n.total_ach)}
-          </div>
-          <div class="section-title">Growth Gaps (DMS)</div>
-          <div class="metrics">
-            ${metric('Gap @20%', n.gap_02)}
-            ${metric('Gap @22%', n.gap_022)}
-            ${metric('Gap @25%', n.gap_025)}
-            ${metric('Gap @28%', n.gap_028)}
-          </div>
-          <div class="section-title">GV Retail Growth Qualifying</div>
-          <div class="metrics">
-            ${metric('GV Base Q1', n.gv_base_q1)}
-            ${metric('Q2 Ach', n.q2_ach)}
-            ${metric('Growth', n.gr, true)}
-            ${metric('Earning NAC', n.earning, false, true)}
-          </div>
-        </div>
-      </div>`;
-    }
-
-    function renderMichelin(m) {
-      const qualClass = (m.qualification === 'YES') ? 'status-yes' : 'status-no';
-      return `
-      <div class="scheme">
+      <div class="scheme-card">
         <div class="scheme-header">
-          7. Michelin Dealers
-          <span class="badge">${m.category || '—'}</span>
+          <h3>4. NEXA Achiever's Club</h3>
         </div>
+        ${conditionsBox('nac')}
         <div class="scheme-body">
-          <div class="metrics">
-            ${metric('Avg Retail', m.avg_retail)}
-            ${metric('YTD CY', m.ytd_cy)}
-            ${metric('YTD LY', m.ytd_ly)}
-            ${metric('Growth %', m.growth, true)}
-            ${metric('RO Vahan Grw', m.ro_vahan_grw, true)}
+          <div class="section-title">Slab Achievement</div>
+          <div class="metrics-grid">
+            ${metric('Base (Excl. Ignis)', n.base)}
+            ${metric('Achievement', n.ach)}
+            ${metric('Gap Sigma (₹900)', n.g_sigma)}
+            ${metric('Gap Delta (₹1.1k)', n.g_delta)}
+            ${metric('Gap Zeta (₹1.4k)', n.g_zeta)}
+            ${metric('Gap Alpha (₹1.8k)', n.g_alpha)}
           </div>
-          <div class="section-title">Qualification Status: <span class="${qualClass}">${m.qualification || '—'}</span></div>
-          <div class="metrics">
-            ${metric('Jul Vahan', m.jul_vahan)}
-            ${metric('Aug Vahan', m.aug_vahan)}
-            ${metric('Sep Vahan', m.sep_vahan)}
-            ${metric('Jun Vahan', m.jun_vahan)}
-            ${metric('LM Vahan Tgt', m.lm_vahan_tgt)}
-            ${metric('Vahan Ach Jul', m.vahan_ach_jul)}
-            ${metric('Gap', m.gap)}
+          
+          <div class="section-title">Additional Opportunity – October</div>
+          <div class="metrics-grid">
+            ${metric('Q3 GV & EV Avg', n.gvq3)}
+            ${metric('Required Retail', n.req)}
+            ${metric('Achievement', n.gv_ach)}
+            ${metric('Gap', n.gv_gap)}
+          </div>
+          
+          <div class="section-title">Wholesale Achievement & Payout</div>
+          <div class="metrics-grid">
+            ${metric('Target – Oct', n.wtgt)}
+            ${metric('Achievement', n.wach)}
+            ${metric('Current Earnings', n.cur, 'cur')}
+            ${metric('Earning Potential', n.pot, 'cur')}
           </div>
         </div>
       </div>`;
