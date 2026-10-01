@@ -2,247 +2,199 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a365d">
+  <meta name="color-scheme" content="light">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
   <title>Dealer Incentive Schemes Portal</title>
   <style>
     :root {
-      --primary: #1a365d;
-      --primary-light: #2b6cb0;
-      --accent: #ed8936;
-      --success: #38a169;
-      --danger: #e53e3e;
-      --warning: #d69e2e;
-      --bg: #f7fafc;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --text: #2d3748;
-      --muted: #718096;
+      --primary: #1a365d; --primary-light: #2b6cb0; --accent: #ed8936;
+      --success: #38a169; --danger: #e53e3e; --warning: #d69e2e;
+      --bg: #f7fafc; --card: #ffffff; --border: #e2e8f0; --text: #2d3748; --muted: #718096;
+      --gutter: clamp(0.75rem, 3vw, 1.5rem);
+      color-scheme: light;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.5;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; min-height: 100dvh; line-height: 1.5;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      overflow-wrap: anywhere;
     }
+
+    /* Header (respects notch / safe areas on iPhone & Android cutouts) */
     .header {
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
-      padding: 1.25rem 1.5rem;
+      color: #fff;
+      padding: 1rem var(--gutter);
+      padding-top: calc(1rem + env(safe-area-inset-top, 0px));
+      padding-left: calc(var(--gutter) + env(safe-area-inset-left, 0px));
+      padding-right: calc(var(--gutter) + env(safe-area-inset-right, 0px));
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
-    .header h1 { font-size: 1.4rem; font-weight: 600; }
-    .header p { opacity: 0.9; font-size: 0.9rem; margin-top: 0.25rem; }
-    .container { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem; }
-    
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+    }
+    .header h1 { font-size: clamp(1.1rem, 4vw, 1.5rem); font-weight: 600; line-height: 1.25; }
+    .header p { opacity: 0.9; font-size: clamp(0.8rem, 2.8vw, 0.95rem); margin-top: 0.2rem; }
+
+    .container {
+      max-width: 1200px; margin: 0 auto;
+      padding: 1.25rem var(--gutter);
+      padding-left: calc(var(--gutter) + env(safe-area-inset-left, 0px));
+      padding-right: calc(var(--gutter) + env(safe-area-inset-right, 0px));
+      padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+    }
+
     /* Login */
     .login-card {
-      background: var(--card);
-      border-radius: 12px;
+      background: var(--card); border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      padding: 2rem;
-      max-width: 420px;
-      margin: 3rem auto;
+      padding: clamp(1.25rem, 5vw, 2rem);
+      width: 100%; max-width: 420px; margin: clamp(1rem, 6vh, 3rem) auto;
     }
-    .login-card h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: var(--primary);
-      font-size: 1.35rem;
-    }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.875rem;
-      margin-bottom: 0.4rem;
-      color: var(--text);
-    }
+    .login-card h2 { text-align: center; margin-bottom: 1.25rem; color: var(--primary); font-size: 1.35rem; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.4rem; }
     .form-group input {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.2s;
+      width: 100%; min-height: 48px; padding: 0.7rem 1rem;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 16px;               /* 16px stops iOS Safari auto-zoom on focus */
+      font-family: inherit; background: #fff; color: var(--text);
+      -webkit-appearance: none; appearance: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     .form-group input:focus {
-      outline: none;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(43,108,176,0.15);
+      outline: none; border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(43,108,176,0.18);
     }
     .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 0.85rem;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 48px; padding: 0.75rem 1rem;
+      background: var(--primary); color: #fff; border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: 600; font-family: inherit; cursor: pointer;
+      touch-action: manipulation; -webkit-appearance: none; appearance: none;
+      transition: background 0.2s, transform 0.05s;
     }
-    .btn:hover { background: var(--primary-light); }
+    .btn:active { transform: scale(0.98); }
+    .btn:focus-visible { outline: 3px solid rgba(237,137,54,0.7); outline-offset: 2px; }
+    @media (hover: hover) { .btn:hover { background: var(--primary-light); } }
     .btn-logout {
-      width: auto;
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      background: rgba(255,255,255,0.2);
+      width: auto; min-height: 44px; padding: 0.5rem 1.1rem; font-size: 0.9rem;
+      background: rgba(255,255,255,0.2); flex-shrink: 0;
     }
-    .btn-logout:hover { background: rgba(255,255,255,0.3); }
+    @media (hover: hover) { .btn-logout:hover { background: rgba(255,255,255,0.32); } }
     .error-msg {
-      background: #fed7d7;
-      color: var(--danger);
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      display: none;
+      background: #fed7d7; color: var(--danger); padding: 0.75rem; border-radius: 8px;
+      margin-bottom: 1rem; font-size: 0.9rem; display: none;
     }
-    
+
     /* Dashboard */
     #dashboard { display: none; }
     .dealer-info {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1.5rem;
+      background: var(--card); border-radius: 12px;
+      padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
     }
-    .dealer-info h2 { font-size: 1.25rem; color: var(--primary); }
+    .dealer-info h2 { font-size: clamp(1.1rem, 4vw, 1.4rem); color: var(--primary); }
     .dealer-info .code { color: var(--muted); font-size: 0.9rem; }
-    
-    /* Scheme cards */
+
+    /* Schemes: 1 column on phones/tablets, 2 columns on laptops/desktops */
+    #schemesContainer { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
+    @media (min-width: 1100px) { #schemesContainer { grid-template-columns: 1fr 1fr; } }
+
     .scheme {
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-      margin-bottom: 1.5rem;
-      overflow: hidden;
+      background: var(--card); border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; min-width: 0;
     }
     .scheme-header {
-      background: linear-gradient(135deg, var(--primary), #2c5282);
-      color: white;
-      padding: 1rem 1.25rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: linear-gradient(135deg, var(--primary), #2c5282); color: #fff;
+      padding: 0.9rem 1.1rem; font-size: clamp(0.95rem, 3.4vw, 1.1rem); font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem 0.75rem;
     }
     .scheme-header .badge {
-      background: rgba(255,255,255,0.2);
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 500;
+      background: rgba(255,255,255,0.2); padding: 0.25rem 0.75rem;
+      border-radius: 20px; font-size: 0.75rem; font-weight: 500; white-space: nowrap;
     }
-    .scheme-body { padding: 1.25rem; }
-    
+    .scheme-body { padding: 1.1rem; }
+
     .metrics {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.75rem; margin-bottom: 0.75rem;
     }
     .metric {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.85rem;
-      text-align: center;
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.75rem 0.5rem; text-align: center; min-width: 0;
     }
     .metric .label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--muted);
-      margin-bottom: 0.3rem;
-      font-weight: 600;
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em;
+      color: var(--muted); margin-bottom: 0.3rem; font-weight: 600; line-height: 1.3;
     }
-    .metric .value {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
+    .metric .value { font-size: clamp(1.05rem, 4vw, 1.3rem); font-weight: 700; color: var(--primary); }
     .metric .value.positive { color: var(--success); }
     .metric .value.negative { color: var(--danger); }
     .metric .value.neutral { color: var(--warning); }
-    
+    .metric .value.text { font-size: 1.05rem; }
+
     .section-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin: 1rem 0 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      margin: 1rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.04em;
     }
-    table.detail {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.875rem;
-      margin-top: 0.5rem;
-    }
-    table.detail th, table.detail td {
-      padding: 0.5rem 0.75rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    table.detail th {
-      background: #edf2f7;
-      font-weight: 600;
-      color: var(--text);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-    }
-    table.detail tr:last-child td { border-bottom: none; }
-    .status-yes { color: var(--success); font-weight: 700; }
-    .status-no { color: var(--danger); font-weight: 700; }
-    
-    .note {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
-      border-top: 1px dashed var(--border);
-    }
-    
-    @media (max-width: 600px) {
-      .metrics { grid-template-columns: repeat(2, 1fr); }
-      .dealer-info { flex-direction: column; align-items: flex-start; }
-    }
-  
-    .conditions {
-      background: #fffaf0;
-      border-bottom: 1px solid #fbd38d;
-      padding: 0.9rem 1.25rem;
-    }
+    .note { font-size: 0.8rem; color: var(--muted); margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); }
+
+    /* Scheme conditions */
+    .conditions { background: #fffaf0; border-bottom: 1px solid #fbd38d; padding: 0.9rem 1.1rem; }
     .conditions .cond-title {
       font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.05em; color: #9c4221; margin-bottom: 0.5rem;
     }
     .conditions ul { list-style: none; }
     .conditions li {
-      font-size: 0.85rem; color: #2d3748; padding: 0.35rem 0 0.35rem 1.1rem;
-      position: relative; border-top: 1px dashed #fbd38d;
+      font-size: 0.875rem; line-height: 1.5; color: var(--text);
+      padding: 0.4rem 0 0.4rem 1.1rem; position: relative; border-top: 1px dashed #fbd38d;
     }
     .conditions li:first-child { border-top: none; }
     .conditions li::before { content: '\25B8'; position: absolute; left: 0; color: var(--accent); }
     .conditions li b { color: #7b341e; }
-    .metric .value.text { font-size: 1.05rem; }
+
+    /* Phones */
+    @media (max-width: 480px) {
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
+      .scheme-body, .conditions { padding: 0.9rem; }
+      .header p { display: none; }
+    }
+    @media (max-width: 340px) { .metrics { grid-template-columns: 1fr; } }
+
+    /* Landscape phones: keep header compact */
+    @media (max-height: 480px) and (orientation: landscape) {
+      .header { padding-top: calc(0.5rem + env(safe-area-inset-top, 0px)); padding-bottom: 0.5rem; }
+      .login-card { margin: 0.75rem auto; }
+    }
+
+    /* Large desktop screens */
+    @media (min-width: 1600px) { html { font-size: 17px; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; } * { transition: none !important; }
+    }
+    @media print {
+      .header .btn-logout { display: none; }
+      .scheme { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <div style="max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+    <div class="header-inner">
       <div>
         <h1>Dealer Incentive Schemes</h1>
         <p>View your scheme-wise achievements &amp; earnings</p>
@@ -256,15 +208,17 @@
     <div id="loginSection">
       <div class="login-card">
         <h2>Dealer Login</h2>
-        <div id="errorMsg" class="error-msg"></div>
+        <div id="errorMsg" class="error-msg" role="alert"></div>
         <form id="loginForm" onsubmit="return handleLogin(event)">
           <div class="form-group">
             <label for="dealerCode">Dealer Code</label>
-            <input type="text" id="dealerCode" placeholder="e.g. G1NA" required autocomplete="username">
+            <input type="text" id="dealerCode" placeholder="e.g. G1NA" required autocomplete="username"
+                   autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="next">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter password" required autocomplete="current-password">
+            <input type="password" id="password" placeholder="Enter password" required autocomplete="current-password"
+                   autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="go">
           </div>
           <button type="submit" class="btn">View Schemes</button>
         </form>
