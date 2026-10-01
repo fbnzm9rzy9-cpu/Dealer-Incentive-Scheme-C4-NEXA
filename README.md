@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -51,7 +52,7 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--navy);-webkit-font-smo
 .lbl em{font-style:normal;background:var(--accent);color:#fff;border-radius:99px;font-size:.7rem;padding:.05rem .5rem;margin-left:.35rem}
 .lbl small{font-weight:500;color:var(--muted);font-size:.7rem}
 .tiles{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:.5rem}
-.tile{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:.6rem .7rem;display:flex;flex-direction:column;justify-content:space-between;text-align:left;font-family:inherit;color:inherit;box-shadow:0 1px 3px rgba(0,0,0,.06);min-height:0;overflow:hidden}
+.tile{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:.6rem .7rem;display:flex;flex-direction:column;justify-content:space-between;text-align:left;font-family:inherit;color:inherit;box-shadow:0 1px 3px rgba(0,0,0,.06);min-height:0;overflow:hidden;cursor:pointer;}
 .tile:active{background:#f8fafc;transform:scale(.98)}
 .tile.w{grid-column:span 2}
 .tt{display:flex;align-items:center;gap:.4rem}
@@ -75,7 +76,7 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--navy);-webkit-font-smo
 .earn span{display:block;font-size:.66rem;font-weight:700;text-transform:uppercase}
 .earn b{font-size:1.3rem;font-weight:800}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:#e2e8f0;border-radius:12px;padding:3px;flex:none}
-.seg button{border:0;background:transparent;padding:.55rem;border-radius:10px;font:600 .85rem inherit;font-family:inherit;color:var(--muted)}
+.seg button{border:0;background:transparent;padding:.55rem;border-radius:10px;font:600 .85rem inherit;font-family:inherit;color:var(--muted);cursor:pointer;}
 .seg button.on{background:#fff;color:var(--navy);box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .pane{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .sec{font-size:.66rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:.6rem 0 .35rem}
@@ -106,7 +107,7 @@ ul.cond li{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;paddin
   <div class="logo">🚗</div>
   <h1>Dealer Incentive App</h1>
   <p class="s">Performance &amp; Earnings Dashboard</p>
-  <form class="lc" onsubmit="return handleLogin(event)">
+  <form id="loginForm" class="lc">
     <div id="errorMsg" class="err"></div>
     <label for="dealerCode">DEALER CODE</label>
     <input id="dealerCode" placeholder="Enter your Dealer Code" required autocomplete="username" autocapitalize="characters">
@@ -117,9 +118,11 @@ ul.cond li{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;paddin
 </section>
 
 <section id="home" class="screen">
-  <div class="top"><div class="av" id="av">—</div>
+  <div class="top">
+    <div class="av" id="av">—</div>
     <div class="who"><h2 id="dealerName">—</h2><small>Dealer Code: <span id="dealerCodeDisplay">—</span></small></div>
-    <button class="ib" onclick="logout()" aria-label="Sign out">⏻</button></div>
+    <button class="ib" onclick="logout()" aria-label="Sign out">⏻</button>
+  </div>
   <div class="home">
     <div class="tots" id="totals"></div>
     <div class="lbl"><span>Schemes Running<em id="cnt">0</em></span><small>Tap a scheme for details</small></div>
@@ -207,7 +210,7 @@ function bar(label,a,t){
 }
 const earn=(c,p)=>`<div class="earn cur"><span>Current Earnings</span><b>${fmt(c,'cur')}</b></div><div class="earn pot"><span>Earning Potential</span><b>${fmt(p,'cur')}</b></div>`;
 
-// ========== SCHEME REGISTRY (workings first, conditions second) ==========
+// ========== SCHEME REGISTRY ==========
 const SCHEMES=[
  {k:'vahan',short:'Vahan Retail Cashback',title:'Vahan Retail Cashback – October',
   prog:d=>[d.ach,d.tgt,'Achi vs Target'],
@@ -246,41 +249,97 @@ const SCHEMES=[
     sec('GV Retail Target vs Achievement',grid([m('GV Retail Target',d.tgt),m('Achievement',d.ach,0,1),m('Achi %',d.pct,'pct',1)]))+
     sec('Wholesale GV Slabs',grid([m('Sigma',d.sigma),m('Delta',d.delta)],1))}
 ];
-let CUR=null,CURS=null;
 
-// ========== SCREENS ==========
-const show=id=>document.querySelectorAll('.screen').forEach(s=>{if(s.id!=='detail')s.classList.toggle('on',s.id===id)});
-function handleLogin(e){
+let CUR=null, CURS=null;
+
+// ========== APPLICATION LOGIC ==========
+const show = id => {
+  document.querySelectorAll('.screen').forEach(s => {
+    if(s.id !== 'detail') s.classList.toggle('on', s.id === id);
+  });
+};
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  const code=dealerCode.value.trim().toUpperCase(),pwd=password.value.trim(),d=DEALERS[code];
-  if(!d||d.password!==pwd){errorMsg.style.display='block';errorMsg.textContent='Invalid Dealer Code or Password. Please try again.';return false}
-  errorMsg.style.display='none';CUR=d;render(d);show('home');return false;
+  
+  const code = document.getElementById('dealerCode').value.trim().toUpperCase();
+  const pwd = document.getElementById('password').value.trim();
+  const errorMsg = document.getElementById('errorMsg');
+  const d = DEALERS[code];
+  
+  if(!d || d.password !== pwd) {
+    errorMsg.style.display = 'block';
+    errorMsg.textContent = 'Invalid Dealer Code or Password. Please try again.';
+    return;
+  }
+  
+  errorMsg.style.display = 'none';
+  CUR = d;
+  render(d);
+  show('home');
+});
+
+function logout() {
+  CUR = null;
+  closeDetail();
+  show('login');
+  document.getElementById('loginForm').reset();
 }
-function logout(){CUR=null;closeDetail();show('login');document.querySelector('.lc').reset();}
-function render(d){
-  dealerName.textContent=d.name;dealerCodeDisplay.textContent=d.code;av.textContent=d.name.charAt(0).toUpperCase();
-  const S=k=>SCHEMES.reduce((a,s)=>a+(Number(d[s.k][k])||0),0);
-  totals.innerHTML=`<div class="tot cur"><span>Total Earned</span><b>${fmt(S('cur'),'cur')}</b></div><div class="tot pot"><span>Total Potential</span><b>${fmt(S('pot'),'cur')}</b></div>`;
-  cnt.textContent=SCHEMES.length;
-  tiles.innerHTML=SCHEMES.map((s,i)=>{
-    const x=d[s.k],pr=s.prog?s.prog(x):null,p=pr?pct(pr[0],pr[1]):null;
-    const foot=s.prog?`<div><div class="pt"><span>${pr[2]}</span><span>${p===null?'—':p+'%'}</span></div><div class="pb"><i class="${p>=100?'ok':''}" style="width:${Math.min(p||0,100)}%"></i></div></div>`
-      :`<div class="pt"><span>Group ${esc(x.grp)}</span><span>Rank ${esc(x.rank)}</span></div>`;
+
+function render(d) {
+  document.getElementById('dealerName').textContent = d.name;
+  document.getElementById('dealerCodeDisplay').textContent = d.code;
+  document.getElementById('av').textContent = d.name.charAt(0).toUpperCase();
+  
+  const S = k => SCHEMES.reduce((a,s) => a + (Number(d[s.k][k]) || 0), 0);
+  document.getElementById('totals').innerHTML = `<div class="tot cur"><span>Total Earned</span><b>${fmt(S('cur'),'cur')}</b></div><div class="tot pot"><span>Total Potential</span><b>${fmt(S('pot'),'cur')}</b></div>`;
+  document.getElementById('cnt').textContent = SCHEMES.length;
+  
+  document.getElementById('tiles').innerHTML = SCHEMES.map((s,i) => {
+    const x = d[s.k];
+    const pr = s.prog ? s.prog(x) : null;
+    const p = pr ? pct(pr[0],pr[1]) : null;
+    
+    const foot = s.prog 
+      ? `<div><div class="pt"><span>${pr[2]}</span><span>${p===null?'—':p+'%'}</span></div><div class="pb"><i class="${p>=100?'ok':''}" style="width:${Math.min(p||0,100)}%"></i></div></div>`
+      : `<div class="pt"><span>Group ${esc(x.grp)}</span><span>Rank ${esc(x.rank)}</span></div>`;
+      
     return `<button class="tile${s.wide?' w':''}" onclick="openDetail(${i})">
       <div class="tt"><span class="tn">${i+1}</span><h3>${s.short}</h3></div>
-      <div class="ev"><div class="c">Earned<b>${fmt(x.cur,'cur')}</b></div><div class="p" style="text-align:right">Potential<b>${fmt(x.pot,'cur')}</b></div></div>${foot}</button>`}).join('');
+      <div class="ev"><div class="c">Earned<b>${fmt(x.cur,'cur')}</b></div><div class="p" style="text-align:right">Potential<b>${fmt(x.pot,'cur')}</b></div></div>${foot}</button>`;
+  }).join('');
 }
-function openDetail(i){
-  CURS=SCHEMES[i];const x=CUR[CURS.k];
-  dTitle.textContent=`${i+1}. ${CURS.title}`;dEarn.innerHTML=earn(x.cur,x.pot);
-  tab('w');detail.classList.add('on');
-}
-function closeDetail(){detail.classList.remove('on')}
-function tab(t){
-  tabW.classList.toggle('on',t==='w');tabC.classList.toggle('on',t==='c');
-  dPane.scrollTop=0;
-  dPane.innerHTML=t==='w'?CURS.work(CUR[CURS.k]):'<ul class="cond">'+CONDITIONS[CURS.k].map(c=>`<li>${c.l?'<strong>'+esc(c.l)+':</strong> ':''}${esc(c.t)}</li>`).join('')+'</ul>';
-}
+
+window.openDetail = function(i) {
+  CURS = SCHEMES[i];
+  const x = CUR[CURS.k];
+  
+  document.getElementById('dTitle').textContent = `${i+1}. ${CURS.title}`;
+  document.getElementById('dEarn').innerHTML = earn(x.cur, x.pot);
+  
+  tab('w');
+  document.getElementById('detail').classList.add('on');
+};
+
+window.closeDetail = function() {
+  document.getElementById('detail').classList.remove('on');
+};
+
+window.tab = function(t) {
+  document.getElementById('tabW').classList.toggle('on', t === 'w');
+  document.getElementById('tabC').classList.toggle('on', t === 'c');
+  
+  const dPane = document.getElementById('dPane');
+  dPane.scrollTop = 0;
+  
+  if (t === 'w') {
+    dPane.innerHTML = CURS.work(CUR[CURS.k]);
+  } else {
+    dPane.innerHTML = '<ul class="cond">' + CONDITIONS[CURS.k].map(c => 
+      `<li>${c.l ? '<strong>' + esc(c.l) + ':</strong> ' : ''}${esc(c.t)}</li>`
+    ).join('') + '</ul>';
+  }
+};
 </script>
 </body>
 </html>
