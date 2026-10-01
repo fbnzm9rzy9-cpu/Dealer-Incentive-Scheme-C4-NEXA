@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dealer Incentive Schemes Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +38,7 @@
       background: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
-      line-height: 1.6;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -59,6 +59,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
     }
 
     .header-branding h1 {
@@ -106,6 +107,7 @@
       border: 1px solid #334155;
       padding: 0.5rem 1rem;
       font-size: 0.875rem;
+      white-space: nowrap;
     }
 
     .btn-logout:hover {
@@ -221,11 +223,7 @@
       box-shadow: var(--shadow-md);
       border: 1px solid var(--border);
       overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .scheme-card:hover {
-      box-shadow: var(--shadow-lg);
+      transition: box-shadow 0.2s ease;
     }
 
     .scheme-header {
@@ -332,12 +330,6 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      transition: background 0.2s;
-    }
-
-    .metric-box:hover {
-      background: #f1f5f9;
-      border-color: #cbd5e1;
     }
 
     .metric-label {
@@ -353,6 +345,7 @@
       font-weight: 700;
       color: var(--text-main);
       letter-spacing: -0.025em;
+      word-break: break-word;
     }
 
     /* Status Colors */
@@ -362,14 +355,46 @@
     .metric-value.cur { color: var(--accent); }
     .metric-value.text { font-size: 1.25rem; }
 
+    /* =========================================
+       MOBILE OPTIMIZATIONS 
+       ========================================= */
     @media (max-width: 768px) {
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
       .dealer-banner { flex-direction: column; align-items: flex-start; gap: 1rem; }
     }
     
-    @media (max-width: 480px) {
-      .metrics-grid { grid-template-columns: 1fr; }
-      .login-card { padding: 1.5rem; margin: 2rem 1rem; }
+    @media (max-width: 600px) {
+      .header { padding: 0.75rem 1rem; }
+      .header-branding h1 { font-size: 1.1rem; }
+      .header-branding p { font-size: 0.75rem; }
+      .btn-logout { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+      
+      .container { padding: 1rem 0.5rem; }
+      .schemes-grid { gap: 1rem; }
+      
+      .dealer-banner { padding: 1.25rem; margin-bottom: 1.5rem; }
+      .dealer-banner h2 { font-size: 1.4rem; }
+      
+      .scheme-header { padding: 1rem; }
+      .scheme-header h3 { font-size: 1rem; }
+      .scheme-header h3::before { height: 1rem; }
+      
+      details.conditions { padding: 0.75rem 1rem; }
+      .scheme-body { padding: 1rem; }
+      
+      /* Force minimum 2 columns on mobile for tight packing */
+      .metrics-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 0.5rem; 
+      }
+      
+      .metric-box { padding: 0.75rem; }
+      .metric-label { font-size: 0.65rem; margin-bottom: 0.25rem; }
+      .metric-value { font-size: 1.1rem; }
+      .metric-value.text { font-size: 1rem; }
+      
+      .section-title { margin: 1rem 0 0.75rem; }
+      
+      .login-card { padding: 1.5rem; margin: 2rem 0.5rem; }
     }
   </style>
 </head>
@@ -707,7 +732,7 @@
             ${metric('Gap', p.gap)}
           </div>
           
-          <div class="section-title">Additional Earning Opportunity</div>
+          <div class="section-title">Additional Opportunity</div>
           <div class="metrics-grid">
             ${metric('Petrol Retail (Q1 Avg)', p.pq1)}
             ${metric('Current Petrol Retails', p.pcur)}
