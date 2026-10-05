@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#1a365d">
+<meta name="theme-color" content="#0b1635">
 <meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=no">
 <title>Dealer Incentive Schemes</title>
@@ -587,23 +587,291 @@ body {
   .metrics { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
   .cond li { font-size: 0.8rem; }
 }
+
+/* ===== MODERN UI REFRESH ===== */
+:root{
+  --p:#0b1635;
+  --p2:#1769e0;
+  --p3:#4f46e5;
+  --g:#0f9f6e;
+  --o:#f59e0b;
+  --r:#dc3545;
+  --bd:#dfe6f1;
+  --mu:#667085;
+  --ink:#111827;
+  --surface:#ffffff;
+  --bg:#f4f7fc;
+}
+
+html{background:var(--bg)}
+body{
+  background:
+    radial-gradient(circle at 8% 0%, rgba(79,70,229,.14), transparent 30rem),
+    radial-gradient(circle at 95% 15%, rgba(23,105,224,.12), transparent 26rem),
+    linear-gradient(180deg,#eef3fb 0%,#f7f9fc 45%,#f3f6fb 100%);
+  color:var(--ink);
+}
+
+/* The oversized title/header has been removed. */
+.header{display:none!important}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:clamp(1rem,3vw,2rem) max(1rem,var(--safe-r)) calc(2rem + var(--safe-b)) max(1rem,var(--safe-l));
+}
+
+/* Login */
+#loginSection{
+  min-height:calc(100dvh - 3rem);
+  position:relative;
+}
+#loginSection::before{
+  content:"";
+  position:absolute;
+  width:18rem;height:18rem;
+  border-radius:50%;
+  background:linear-gradient(135deg,rgba(79,70,229,.16),rgba(23,105,224,.04));
+  top:8%;left:-8rem;
+  filter:blur(2px);
+}
+.login{
+  position:relative;
+  max-width:410px;
+  padding:2rem 1.6rem 1.6rem;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:24px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 22px 60px rgba(16,35,75,.13),0 3px 12px rgba(16,35,75,.06);
+  backdrop-filter:blur(16px);
+  overflow:hidden;
+}
+.login::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:5px;
+  background:linear-gradient(90deg,#1769e0,#4f46e5,#12b981);
+}
+.login-mark{
+  width:58px;height:58px;
+  display:grid;place-items:center;
+  margin:0 auto .85rem;
+  border-radius:18px;
+  color:#fff;
+  font-size:1rem;font-weight:900;
+  letter-spacing:.06em;
+  background:linear-gradient(135deg,#0b1635,#1769e0 60%,#4f46e5);
+  box-shadow:0 10px 25px rgba(23,105,224,.28);
+}
+.login h2{
+  color:#0b1635;
+  font-size:1.45rem;
+  text-align:center;
+  margin-bottom:.25rem;
+}
+.login-sub{
+  color:var(--mu);
+  font-size:.78rem;
+  text-align:center;
+  margin-bottom:1.35rem;
+}
+.fg label{color:#344054;font-size:.75rem}
+.fg input{
+  border:1px solid #d7deea;
+  background:#f9fbfe;
+  border-radius:12px;
+  transition:.2s ease;
+}
+.fg input:hover{border-color:#b8c5d8}
+.fg input:focus{
+  border-color:#1769e0;
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(23,105,224,.11);
+}
+.btn{
+  background:linear-gradient(135deg,#0b1635 0%,#1769e0 58%,#4f46e5 100%);
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(23,105,224,.22);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.btn:hover{box-shadow:0 12px 26px rgba(23,105,224,.28);transform:translateY(-1px)}
+.btn:active{transform:translateY(0) scale(.99)}
+
+/* Dashboard identity */
+#dashboard{animation:fadeUp .45s ease both}
+.dealer{
+  position:relative;
+  margin-bottom:1rem;
+  padding:1rem 1.05rem;
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:18px;
+  background:linear-gradient(135deg,#0b1635 0%,#172b5d 62%,#243e83 100%);
+  color:#fff;
+  box-shadow:0 14px 35px rgba(11,22,53,.18);
+  overflow:hidden;
+}
+.dealer::after{
+  content:"";
+  position:absolute;
+  width:180px;height:180px;
+  border-radius:50%;
+  right:-70px;top:-95px;
+  background:rgba(255,255,255,.08);
+}
+.dealer-main{position:relative;z-index:1}
+.dealer h2{color:#fff;font-size:1.35rem;letter-spacing:-.02em}
+.dealer-kicker{
+  display:block;
+  font-size:.58rem;
+  letter-spacing:.12em;
+  font-weight:800;
+  color:#a9c7ff;
+  margin-bottom:.2rem;
+}
+.dealer .code{
+  position:relative;z-index:1;
+  color:#d5e2fb;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+  padding:.28rem .65rem;
+}
+
+/* Section toolbar */
+.running{
+  margin:1rem 0 .25rem;
+  padding:.1rem .05rem;
+}
+.running h3{font-size:1.05rem;color:#0b1635}
+.count{
+  background:linear-gradient(135deg,#1769e0,#4f46e5);
+  box-shadow:0 4px 12px rgba(23,105,224,.2);
+}
+.link{
+  border-color:#c9d5e8;
+  color:#1769e0;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(16,35,75,.05);
+  transition:.18s ease;
+}
+.link:hover{background:#eef5ff;border-color:#9db9e6}
+.hint{color:#7b8798;margin-bottom:.8rem}
+
+/* Scheme cards */
+#schemes{gap:.8rem}
+.scheme{
+  border:1px solid #e3e8f0;
+  border-radius:17px;
+  box-shadow:0 5px 18px rgba(16,35,75,.055);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+.scheme:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(16,35,75,.10);
+  border-color:#d2dceb;
+}
+.scheme > summary{
+  padding:.7rem .8rem;
+  background:linear-gradient(135deg,#0b1635,#173b79 62%,#1769e0);
+}
+.scheme:nth-child(2) > summary{background:linear-gradient(135deg,#10233f,#155e75 62%,#0f9f9a)}
+.scheme:nth-child(3) > summary{background:linear-gradient(135deg,#24134f,#4f2f9e 62%,#7c3aed)}
+.scheme:nth-child(4) > summary{background:linear-gradient(135deg,#173b32,#087f5b 62%,#12b981)}
+.scheme:nth-child(5) > summary{background:linear-gradient(135deg,#4a2405,#a75d08 62%,#f59e0b)}
+.scheme:nth-child(6) > summary{background:linear-gradient(135deg,#102e50,#2563a9 62%,#38bdf8)}
+.scheme:nth-child(7) > summary{background:linear-gradient(135deg,#3a1731,#8b2f61 62%,#e11d75)}
+.s-num{
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.16);
+}
+.s-title{font-weight:700}
+.s-body{
+  padding:.95rem;
+  background:linear-gradient(180deg,#fff 0%,#fbfcfe 100%);
+}
+.sec-t{
+  color:#2457a6;
+  border-left-color:#1769e0;
+}
+.metric{
+  background:#f8fafd;
+  border-color:#e4e9f1;
+  padding:.52rem .3rem;
+  transition:.18s ease;
+}
+.metric:hover{background:#f1f6ff;border-color:#cddcf2}
+.metric .v{color:#102a56}
+.bar-t{background:#e7edf5;height:8px}
+.bar-f{
+  background:linear-gradient(90deg,#1769e0,#4f46e5);
+  box-shadow:0 0 8px rgba(23,105,224,.2);
+  transition:width .7s cubic-bezier(.2,.8,.2,1);
+}
+.bar-f.ok{background:linear-gradient(90deg,#0f9f6e,#20c997)}
+.chip.cur,.tile.cur{
+  background:linear-gradient(135deg,#f59e0b,#ea7b09);
+  box-shadow:0 5px 14px rgba(245,158,11,.16);
+}
+.chip.pot,.tile.pot{
+  background:linear-gradient(135deg,#0f9f6e,#087f5b);
+  box-shadow:0 5px 14px rgba(15,159,110,.15);
+}
+.chip.nt{background:#eef3fa;color:#17365f}
+.earn{gap:.55rem}
+.tile{padding:.7rem .35rem;border-radius:12px}
+.tile .v{font-size:1.12rem}
+.tbl th{background:#eef3f9;color:#526173}
+.tbl td{border-bottom-color:#e6ebf2}
+.cond{
+  background:linear-gradient(135deg,#fffaf0,#fffdf8);
+  border-color:#f5d48a;
+  box-shadow:0 4px 12px rgba(154,103,20,.05);
+}
+.cond-t{color:#a15c12}
+.cond li{border-top-color:#f3dfb1}
+.cond li::before{color:#e69a22}
+.cond li b,.cond li.h{color:#814d13}
+
+/* Gentle motion */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes shimmer{
+  from{background-position:0 0}
+  to{background-position:200% 0}
+}
+.scheme[open] > summary{
+  background-size:200% 100%;
+  animation:shimmer 5s linear infinite;
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+@media (min-width:700px){
+  .container{padding-top:2.2rem}
+  #schemes{gap:1rem}
+  .scheme > summary{padding:.8rem 1rem}
+  .s-body{padding:1.15rem}
+}
+@media (max-width:520px){
+  .container{padding-left:.75rem;padding-right:.75rem}
+  .login{padding:1.8rem 1.15rem 1.35rem;border-radius:20px}
+  .dealer{padding:.85rem}
+  .dealer .code{font-size:.68rem}
+  .s-title{font-size:.84rem}
+}
+
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="header-in">
-    <div>
-      <h1>Dealer Incentive Schemes</h1>
-      <p>Scheme-wise achievements &amp; earnings</p>
-    </div>
-    <button id="logoutBtn" class="btn btn-out" style="display:none" onclick="logout()">Logout</button>
-  </div>
-</div>
-
 <div class="container">
   <div id="loginSection">
     <div class="login">
-      <h2>Dealer Login</h2>
+      <div class="login-mark"><span>NX</span></div>
+      <h2>Dealer Incentive Portal</h2>
+      <p class="login-sub">Secure access to your C4 NEXA scheme performance</p>
       <div id="errorMsg" class="err" role="alert"></div>
       <form id="loginForm" onsubmit="return handleLogin(event)">
         <div class="fg">
@@ -625,7 +893,10 @@ body {
 
   <div id="dashboard">
     <div class="dealer">
-      <h2 id="dealerName">—</h2>
+      <div class="dealer-main">
+        <span class="dealer-kicker">NEXA • C4 INCENTIVE</span>
+        <h2 id="dealerName">—</h2>
+      </div>
       <div class="code">Code: <span id="dealerCodeDisplay">—</span></div>
     </div>
     <div class="running">
