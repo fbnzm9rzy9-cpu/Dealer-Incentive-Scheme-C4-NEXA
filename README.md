@@ -833,6 +833,39 @@ body{
 .cond li::before{color:#e69a22}
 .cond li b,.cond li.h{color:#814d13}
 
+
+/* Dashboard data summary */
+.dashboard-summary{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.65rem;
+  margin:.8rem 0 1rem;
+}
+.sum-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+  padding:.8rem .85rem;
+  color:#fff;
+  box-shadow:0 9px 22px rgba(16,35,75,.09);
+}
+.sum-card::after{
+  content:"";
+  position:absolute;
+  width:90px;height:90px;border-radius:50%;
+  right:-35px;top:-45px;background:rgba(255,255,255,.10);
+}
+.sum-card.blue{background:linear-gradient(135deg,#0b1635,#1769e0)}
+.sum-card.green{background:linear-gradient(135deg,#07553e,#0f9f6e)}
+.sum-card.purple{background:linear-gradient(135deg,#2c1a63,#7c3aed)}
+.sum-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700;opacity:.8}
+.sum-value{font-size:1.18rem;font-weight:850;margin-top:.12rem;position:relative;z-index:1}
+.sum-note{font-size:.61rem;opacity:.78;margin-top:.1rem;position:relative;z-index:1}
+@media(max-width:520px){
+  .dashboard-summary{grid-template-columns:1fr 1fr}
+  .sum-card:last-child{grid-column:1/-1}
+}
+
 /* Gentle motion */
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(10px)}
@@ -904,7 +937,8 @@ body{
       <span class="count">7</span>
       <button id="toggleBtn" class="link" onclick="toggleAll()">Expand all</button>
     </div>
-    <div class="hint">Tap a scheme to open its workings and conditions.</div>
+    <div class="hint">Your Excel scheme data is loaded below. Tap any scheme to collapse or expand its workings and conditions.</div>
+    <div id="dashboardSummary" class="dashboard-summary"></div>
     <div id="schemes"></div>
   </div>
 </div>
@@ -964,7 +998,7 @@ function conds(key) {
 }
 
 function card(n, key, title, head, work) {
-  return `<details class="scheme"><summary><div class="s-top"><span class="s-num">${n}</span><span class="s-title">${title}</span><span class="chev"></span></div>${head}</summary><div class="s-body">${work}${conds(key)}</div></details>`;
+  return `<details class="scheme" open><summary><div class="s-top"><span class="s-num">${n}</span><span class="s-title">${title}</span><span class="chev"></span></div>${head}</summary><div class="s-body">${work}${conds(key)}</div></details>`;
 }
 
 function renderAll(d) {
@@ -1020,25 +1054,48 @@ function handleLogin(e) {
   const code = document.getElementById('dealerCode').value.trim().toUpperCase();
   const pwd = document.getElementById('password').value.trim();
   const err = document.getElementById('errorMsg'), d = DEALERS[code];
+
   if (!d || d.password !== pwd) {
     err.style.display = 'block';
     err.textContent = 'Invalid Dealer Code or Password. Please try again.';
     return false;
   }
+
   err.style.display = 'none';
   document.getElementById('loginSection').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   document.getElementById('logoutBtn').style.display = 'inline-flex';
   document.getElementById('dealerName').textContent = d.name;
   document.getElementById('dealerCodeDisplay').textContent = d.code;
-  document.getElementById('schemes').innerHTML = renderAll(d);
-  document.getElementById('toggleBtn').textContent = 'Expand all';
-  window.scrollTo(0, 0);
+
+  try {
+    const all = [d.vahan, d.pp, d.psl, d.nac, d.mega, d.gvsc, d.tdd];
+    const current = all.reduce((sum, x) => sum + (typeof x.cur === 'number' ? x.cur : 0), 0);
+    const potential = all.reduce((sum, x) => sum + (typeof x.pot === 'number' ? x.pot : 0), 0);
+    const ach = d.vahan && typeof d.vahan.tgt === 'number' && d.vahan.tgt > 0
+      ? d.vahan.ach / d.vahan.tgt : 0;
+
+    document.getElementById('dashboardSummary').innerHTML =
+      '<div class="sum-card blue"><div class="sum-label">Current Earnings</div><div class="sum-value">' + fmt(current,'cur') + '</div><div class="sum-note">Across available schemes</div></div>' +
+      '<div class="sum-card green"><div class="sum-label">Earning Potential</div><div class="sum-value">' + fmt(potential,'cur') + '</div><div class="sum-note">Maximum shown in Excel</div></div>' +
+      '<div class="sum-card purple"><div class="sum-label">Vahan Achievement</div><div class="sum-value">' + fmt(ach,'pct') + '</div><div class="sum-note">' + fmt(d.vahan.ach) + ' / ' + fmt(d.vahan.tgt) + '</div></div>';
+
+    document.getElementById('schemes').innerHTML = renderAll(d);
+    document.getElementById('toggleBtn').textContent = 'Collapse all';
+    window.scrollTo(0, 0);
+  } catch (renderError) {
+    console.error('Dashboard render error:', renderError);
+    document.getElementById('schemes').innerHTML =
+      '<div class="cond"><div class="cond-t">Dashboard data could not be rendered</div><ul><li>Please refresh the page and try again.</li></ul></div>';
+  }
+
   return false;
 }
 
 function logout() {
   document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('dashboardSummary').innerHTML = '';
+  document.getElementById('schemes').innerHTML = '';
   document.getElementById('loginSection').style.display = 'flex';
   document.getElementById('logoutBtn').style.display = 'none';
   document.getElementById('loginForm').reset();
