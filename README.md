@@ -729,6 +729,7 @@ body{
   color:#a9c7ff;
   margin-bottom:.2rem;
 }
+.dealer-actions{position:relative;z-index:2;display:flex;align-items:center;gap:.45rem;flex-shrink:0}
 .dealer .code{
   position:relative;z-index:1;
   color:#d5e2fb;
@@ -930,7 +931,7 @@ body{
         <span class="dealer-kicker">NEXA • C4 INCENTIVE</span>
         <h2 id="dealerName">—</h2>
       </div>
-      <div class="code">Code: <span id="dealerCodeDisplay">—</span></div>
+      <div class="dealer-actions"><div class="code">Code: <span id="dealerCodeDisplay">—</span></div><button id="logoutBtn" class="btn-out" onclick="logout()" style="display:none">Logout</button></div>
     </div>
     <div class="running">
       <h3>Schemes Running</h3>
