@@ -1059,7 +1059,7 @@ function renderAll(d) {
     card(3, 'psl', 'Maruti Suzuki Premier League', `<div class="chips">${nt('Dealer Group', s.grp)}${nt('HO Ranking', s.rank)}</div>`,
       sec('Super Qualifying Criteria', grid([m('Retail Base Sep–Nov', s.sb), m('Retail Achi', s.sa), m('Growth %', s.sg, 'pct')])) +
       sec('Ranking Condition 1 : Sept to Nov', grid([m('Petrol Base', s.pb), m('Petrol Retail', s.pr), m('Growth %', s.pgr, 'pct')])) +
-      sec('Ranking Condition 2 : Sept', grid([m('Q1 Retail Base', s.qb), m('Achi', s.qa), m('Growth', s.qg, 'pct')]))),
+      sec('Ranking Condition 2 : Sept', grid([m('Q1 Retail Base', s.qb), m('Achi', s.qa), m('Growth', s.qg, 'pct')]))), s.qual),
     card(4, 'nac', "NEXA Achiever's Club", chips(n.cur, n.pot),
       sec('Slab Achievement', grid([m('Retail Base (Excl. Ignis)', n.base), m('Retail Achievement', n.ach)]) +
         table(['Slab', 'Per Car', 'Gap'], [['Sigma', '₹900', '<span class="gap-value">' + fmt(n.g1) + '</span>'], ['Delta', '₹1,100', '<span class="gap-value">' + fmt(n.g2) + '</span>'], ['Zeta', '₹1,400', '<span class="gap-value">' + fmt(n.g3) + '</span>'], ['Alpha', '₹1,800', '<span class="gap-value">' + fmt(n.g4) + '</span>']])) +
@@ -1081,7 +1081,7 @@ function renderAll(d) {
       bar(t.ach, t.tgt, 'GV Retail Achievement vs Target') +
       sec('GV Retail', grid([m('GV Retail Target', t.tgt), m('Achievement', t.ach), m('Achi %', t.pct, 'pct')])) +
       sec('GV Wholesale', grid([m('Wholesale Target', t.wsTgt), m('Wholesale Achievement', t.wsAch), m('Wholesale Achi %', t.wsAchi2, 'pct')])) +
-      sec('WS Payout', grid([m('GV Sigma', t.sig, 'cur'), m('GV Delta', t.dlt, 'cur')])) +
+      sec('WS Payout', grid([m('GV Sigma', t.sig), m('GV Delta', t.dlt)])) +
       earn(t.cur, t.pot), t.qual)
   ].join('');
 }
