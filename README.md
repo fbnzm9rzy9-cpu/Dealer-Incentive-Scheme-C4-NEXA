@@ -888,6 +888,7 @@ body{
 .vahan-layout{display:flex;flex-direction:column;gap:.35rem;width:100%}
 .vahan-layout .vahan-row{width:100%}
 .vahan-layout .vahan-row .metrics{width:100%}
+.vahan-layout .vahan-row:not(.three) .metrics{grid-template-columns:minmax(0,1fr)}
 .vahan-layout .vahan-row.three .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 .negative,.is-negative,.num-negative{color:#dc2626!important;font-weight:800!important}
