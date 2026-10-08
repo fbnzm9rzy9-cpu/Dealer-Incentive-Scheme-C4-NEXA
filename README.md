@@ -986,9 +986,11 @@ const BAD = [null, undefined, '', '-', '#N/A', '#DIV/0!', '#NA'];
 function fmt(v, t) {
   if (BAD.includes(v)) return '—';
   if (typeof v === 'number') {
-    if (t === 'pct') return (v * 100).toFixed(1) + '%';
-    if (t === 'cur') return '₹' + v.toLocaleString('en-IN');
-    return Number.isInteger(v) ? v.toLocaleString('en-IN') : v.toFixed(2);
+    let out;
+    if (t === 'pct') out = (v * 100).toFixed(1) + '%';
+    else if (t === 'cur') out = '₹' + v.toLocaleString('en-IN');
+    else out = Number.isInteger(v) ? v.toLocaleString('en-IN') : v.toFixed(2);
+    return v < 0 ? '<span class="num-negative">' + out + '</span>' : out;
   }
   return v;
 }
@@ -996,7 +998,8 @@ function fmt(v, t) {
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 function m(label, v, t) {
-  const c = t === 'txt' ? 'txt' : (t === 'pct' && typeof v === 'number' ? (v > 0 ? 'pos' : v < 0 ? 'neg' : '') : '');
+  let c = t === 'txt' ? 'txt' : (t === 'pct' && typeof v === 'number' ? (v > 0 ? 'pos' : v < 0 ? 'neg' : '') : '');
+  if (label.toLowerCase().includes('gap')) c += ' gap-value';
   return `<div class="metric"><div class="l">${label}</div><div class="v ${c}">${fmt(v, t)}</div></div>`;
 }
 
@@ -1022,7 +1025,8 @@ function conds(key) {
 }
 
 function card(n, key, title, head, work) {
-  return `<details class="scheme"><summary><div class="s-top"><span class="s-num">${n}</span><span class="s-title">${title}</span><span class="chev"></span></div>${head}</summary><div class="s-body">${work}${conds(key)}</div></details>`;
+  const status = 'Not Qualified';
+  return `<details class="scheme"><summary><div class="s-top"><span class="s-num">${n}</span><span class="s-title">${title}</span><span class="qual-badge qual-no">${status}</span><span class="chev"></span></div>${head}</summary><div class="s-body">${work}${conds(key)}</div></details>`;
 }
 
 function renderAll(d) {
@@ -1044,7 +1048,7 @@ function renderAll(d) {
       sec('Ranking Condition 2 : Sept', grid([m('Q1 Retail Base', s.qb), m('Achi', s.qa), m('Growth', s.qg, 'pct')]))),
     card(4, 'nac', "NEXA Achiever's Club", chips(n.cur, n.pot),
       sec('Slab Achievement', grid([m('Retail Base (Excl. Ignis)', n.base), m('Retail Achievement', n.ach)]) +
-        table(['Slab', 'Per Car', 'Gap'], [['Sigma', '₹900', fmt(n.g1)], ['Delta', '₹1,100', fmt(n.g2)], ['Zeta', '₹1,400', fmt(n.g3)], ['Alpha', '₹1,800', fmt(n.g4)]])) +
+        table(['Slab', 'Per Car', 'Gap'], [['Sigma', '₹900', '<span class="gap-value">' + fmt(n.g1) + '</span>'], ['Delta', '₹1,100', '<span class="gap-value">' + fmt(n.g2) + '</span>'], ['Zeta', '₹1,400', '<span class="gap-value">' + fmt(n.g3) + '</span>'], ['Alpha', '₹1,800', '<span class="gap-value">' + fmt(n.g4) + '</span>']])) +
       sec('Additional Earning Opportunity – October', grid([m('Q3 GV & EV Avg Retail', n.gvq3), m('Required Retail', n.req), m('Achi', n.gach), m('Gap', n.ggap)])) +
       bar(n.wach, n.wtgt, 'Wholesale Achi vs Target') +
       sec('Wholesale Achievement', grid([m('Target – October', n.wtgt), m('Achi', n.wach), m('Achi %', n.wpct, 'pct')])) +
