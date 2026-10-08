@@ -884,6 +884,12 @@ body{
 .qual-no{background:rgba(239,68,68,.16);border-color:rgba(252,165,165,.38);color:#ffe1e1}
 .cond,.cond li,.cond-t{font-style:italic}
 .gap,.gap-value,.is-gap,.num-gap{color:#d97706!important;font-weight:800!important}
+/* Vahan Retail Cashback – Excel layout */
+.vahan-layout{display:flex;flex-direction:column;gap:.35rem;width:100%}
+.vahan-layout .vahan-row{width:100%}
+.vahan-layout .vahan-row .metrics{width:100%}
+.vahan-layout .vahan-row.three .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+
 .negative,.is-negative,.num-negative{color:#dc2626!important;font-weight:800!important}
 @media(max-width:520px){
   .dealer-disclaimer{font-size:.59rem}.qual-badge{font-size:.56rem;padding:.23rem .45rem}
@@ -1048,9 +1054,13 @@ function renderAll(d) {
   const nt = (l, x) => `<div class="chip nt"><i>${l}</i><b>${fmt(x)}</b></div>`;
   return [
     card(1, 'vahan', 'Vahan Retail Cashback – October', chips(v.cur, v.pot),
-      bar(v.ach, v.tgt, 'Achievement vs Target') +
-      sec('Retail Position', grid([m('Target', v.tgt), m('Achievement', v.ach), m('Pendency', v.pend), m('Total Pipeline', v.pipe), m('Gap', v.gap)])) +
-      earn(v.cur, v.pot), v.qual),
+      sec('Retail Position',
+        '<div class="vahan-layout">' +
+          '<div class="vahan-row">' + grid([m('Target', v.tgt)]) + '</div>' +
+          '<div class="vahan-row three">' + grid([m('Achievement', v.ach), m('Pendency', v.pend), m('Pipeline', v.pipe)]) + '</div>' +
+          '<div class="vahan-row">' + grid([m('Gap', v.gap)]) + '</div>' +
+        '</div>'
+      ) + earn(v.cur, v.pot), v.qual),
     card(2, 'pp', 'Maruti Power Performer 2.0', chips(p.cur, p.pot),
       bar(p.ach, p.req, 'Retail Achievement vs Required') +
       sec('Scheme Achievement', grid([m('All Model Retail Base (Sep–Dec)', p.base), m('Retail Required (@5% Growth)', p.req), m('Retail Achievement', p.ach), m('Gap', p.gap)])) +
