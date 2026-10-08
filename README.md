@@ -867,6 +867,28 @@ body{
   .sum-card:last-child{grid-column:1/-1}
 }
 
+
+/* Requested portal refinements */
+.dealer-disclaimer{
+  max-width:720px;margin-top:.35rem;color:#d7e4fb;font-size:.66rem;line-height:1.45;
+  font-style:italic;position:relative;z-index:1;
+}
+.dealer-actions{margin-left:auto}
+.scheme > summary{position:relative}
+.qual-badge{
+  margin-left:auto;flex:0 0 auto;padding:.26rem .58rem;border-radius:999px;
+  font-size:.62rem;font-weight:800;letter-spacing:.02em;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.13);color:#fff;
+}
+.qual-yes{background:rgba(16,185,129,.20);border-color:rgba(110,231,183,.45);color:#d9fff1}
+.qual-no{background:rgba(239,68,68,.16);border-color:rgba(252,165,165,.38);color:#ffe1e1}
+.cond,.cond li,.cond-t{font-style:italic}
+.gap,.gap-value,.is-gap,.num-gap{color:#d97706!important;font-weight:800!important}
+.negative,.is-negative,.num-negative{color:#dc2626!important;font-weight:800!important}
+@media(max-width:520px){
+  .dealer-disclaimer{font-size:.59rem}.qual-badge{font-size:.56rem;padding:.23rem .45rem}
+}
+
 /* Gentle motion */
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(10px)}
@@ -877,8 +899,8 @@ body{
   to{background-position:200% 0}
 }
 .scheme[open] > summary{
-  background-size:200% 100%;
-  animation:shimmer 5s linear infinite;
+  animation:none!important;
+  background-size:100% 100%;
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -905,7 +927,7 @@ body{
     <div class="login">
       <div class="login-mark"><span>NX</span></div>
       <h2>Dealer Incentive Portal</h2>
-      <p class="login-sub">Secure access to your C4 NEXA scheme performance</p>
+      
       <div id="errorMsg" class="err" role="alert"></div>
       <form id="loginForm" onsubmit="return handleLogin(event)">
         <div class="fg">
@@ -930,6 +952,7 @@ body{
       <div class="dealer-main">
         <span class="dealer-kicker">NEXA • C4 INCENTIVE</span>
         <h2 id="dealerName">—</h2>
+        <div class="dealer-disclaimer">All Scheme achievement and payout status are tentative. For more information kindly contact regional office team.</div>
       </div>
       <div class="dealer-actions"><div class="code">Code: <span id="dealerCodeDisplay">—</span></div><button id="logoutBtn" class="btn-out" onclick="logout()" style="display:none">Logout</button></div>
     </div>
@@ -938,7 +961,7 @@ body{
       <span class="count">7</span>
       <button id="toggleBtn" class="link" onclick="toggleAll()">Expand all</button>
     </div>
-    <div class="hint">Your Excel scheme data is loaded below. Tap any scheme to collapse or expand its workings and conditions.</div>
+    
     <div id="dashboardSummary" class="dashboard-summary"></div>
     <div id="schemes"></div>
   </div>
@@ -999,7 +1022,7 @@ function conds(key) {
 }
 
 function card(n, key, title, head, work) {
-  return `<details class="scheme" open><summary><div class="s-top"><span class="s-num">${n}</span><span class="s-title">${title}</span><span class="chev"></span></div>${head}</summary><div class="s-body">${work}${conds(key)}</div></details>`;
+  return `<details class="scheme"><summary><div class="s-top"><span class="s-num">${n}</span><span class="s-title">${title}</span><span class="chev"></span></div>${head}</summary><div class="s-body">${work}${conds(key)}</div></details>`;
 }
 
 function renderAll(d) {
@@ -1077,12 +1100,13 @@ function handleLogin(e) {
       ? d.vahan.ach / d.vahan.tgt : 0;
 
     document.getElementById('dashboardSummary').innerHTML =
-      '<div class="sum-card blue"><div class="sum-label">Current Earnings</div><div class="sum-value">' + fmt(current,'cur') + '</div><div class="sum-note">Across available schemes</div></div>' +
-      '<div class="sum-card green"><div class="sum-label">Earning Potential</div><div class="sum-value">' + fmt(potential,'cur') + '</div><div class="sum-note">Maximum shown in Excel</div></div>' +
+      '<div class="sum-card blue"><div class="sum-label">Current Earnings</div><div class="sum-value">' + fmt(current,'cur') + '</div></div>' +
+      '<div class="sum-card green"><div class="sum-label">Earning Potential</div><div class="sum-value">' + fmt(potential,'cur') + '</div></div>' +
       '<div class="sum-card purple"><div class="sum-label">Vahan Achievement</div><div class="sum-value">' + fmt(ach,'pct') + '</div><div class="sum-note">' + fmt(d.vahan.ach) + ' / ' + fmt(d.vahan.tgt) + '</div></div>';
 
     document.getElementById('schemes').innerHTML = renderAll(d);
-    document.getElementById('toggleBtn').textContent = 'Collapse all';
+    document.querySelectorAll('#schemes .scheme').forEach(s => { s.open = false; });
+    document.getElementById('toggleBtn').textContent = 'Expand all';
     window.scrollTo(0, 0);
   } catch (renderError) {
     console.error('Dashboard render error:', renderError);
