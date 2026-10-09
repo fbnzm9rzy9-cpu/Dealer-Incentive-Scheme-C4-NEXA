@@ -868,6 +868,36 @@ body{
 }
 
 
+
+/* Requested scheme card polish: earnings colors and punched serial tabs */
+.chip.cur,.tile.cur{
+  background:linear-gradient(135deg,#f59e0b,#ea7b09)!important;
+  color:#fff!important;
+  box-shadow:0 5px 14px rgba(245,158,11,.20);
+}
+.chip.pot,.tile.pot{
+  background:linear-gradient(135deg,#0f9f6e,#087f5b)!important;
+  color:#fff!important;
+  box-shadow:0 5px 14px rgba(15,159,110,.18);
+}
+.scheme > summary{position:relative;padding-left:1.35rem}
+.s-top{position:relative;padding-left:1.05rem;min-height:2rem}
+.s-num{
+  position:absolute;left:-.65rem;top:-.72rem;z-index:3;
+  width:2rem;height:2rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#60a5fa,#1769e0);
+  color:#fff;border:3px solid #f4f7fc;
+  box-shadow:0 2px 7px rgba(11,22,53,.22);
+  font-size:.82rem;font-weight:900;
+}
+.scheme:nth-child(2) .s-num{background:linear-gradient(145deg,#fbbf24,#b77908)}
+.scheme:nth-child(3) .s-num{background:linear-gradient(145deg,#34d399,#0f9f6e)}
+.scheme:nth-child(4) .s-num{background:linear-gradient(145deg,#a78bfa,#6d28d9)}
+.scheme:nth-child(5) .s-num{background:linear-gradient(145deg,#fb923c,#c2410c)}
+.scheme:nth-child(6) .s-num{background:linear-gradient(145deg,#38bdf8,#0369a1)}
+.scheme:nth-child(7) .s-num{background:linear-gradient(145deg,#f472b6,#be185d)}
+
 /* Requested portal refinements */
 .dealer-disclaimer{
   max-width:720px;margin-top:.35rem;color:#d7e4fb;font-size:.66rem;line-height:1.45;
